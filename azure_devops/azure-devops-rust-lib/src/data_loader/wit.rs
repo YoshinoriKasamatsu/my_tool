@@ -114,6 +114,11 @@ async fn get_work_items(config: &Config, ids: Vec<u32>) -> Vec<String> {
 
     let mut work_item_json_text_list = Vec::new();
 
+    // 時間の計測開始
+    let start = Instant::now();
+    // 100件毎に経過時間を計測して出力するためのカウンター宣言
+    let mut counter = 0;
+
     // ids_vecでループ処理
     for ids in ids_vec {
         if ids.len() == 0 {
@@ -129,6 +134,9 @@ async fn get_work_items(config: &Config, ids: Vec<u32>) -> Vec<String> {
             let json_text = serde_json::to_string(&work_item).unwrap();
             work_item_json_text_list.push(json_text);
         }
+        counter += work_items.len();
+        let end = Instant::now();
+        println!("get_work_items: {} {:?}", counter, end.duration_since(start));
     }
     work_item_json_text_list
 }
@@ -165,9 +173,23 @@ async fn get_revisions(config: &Config, ids: Vec<u32>) -> Vec<(u32, String)> {
 
     let mut revisions_json_text_list: Vec<(u32, String)> = Vec::new();
 
+    // 時間の計測開始
+    let start = Instant::now();
+    // 100件毎に経過時間を計測して出力するためのカウンター宣言
+    let mut counter = 0;
+    let mut total_counter = 0;
     for id in ids {
         let json_text = crate::resources::wit::get_workitem_revisions(&config, id).await.unwrap();
         revisions_json_text_list.push((id, json_text));
+        // 100件毎に経過時間を計測して出力する
+        counter += 1;
+        total_counter += 1;
+        if counter == 100 {
+            let end = Instant::now();
+            // get_revisionsの処理時間を出力する取得件数と処理時間を出力する
+            println!("get_revisions: {} {:?}", total_counter, end.duration_since(start));
+            counter = 0;
+        }
     }
     revisions_json_text_list
 }
