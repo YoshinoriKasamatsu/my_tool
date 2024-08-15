@@ -1,0 +1,80 @@
+<table mat-table [dataSource]="values" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="referenceName">
+    <th mat-header-cell *matHeaderCellDef> referenceName </th>
+    <td mat-cell *matCellDef="let element"> {{element.referenceName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> type </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="usage">
+    <th mat-header-cell *matHeaderCellDef> usage </th>
+    <td mat-cell *matCellDef="let element"> {{element.usage}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="readOnly">
+    <th mat-header-cell *matHeaderCellDef> readOnly </th>
+    <td mat-cell *matCellDef="let element"> {{element.readOnly}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="canSortBy">
+    <th mat-header-cell *matHeaderCellDef> canSortBy </th>
+    <td mat-cell *matCellDef="let element"> {{element.canSortBy}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isQueryable">
+    <th mat-header-cell *matHeaderCellDef> isQueryable </th>
+    <td mat-cell *matCellDef="let element"> {{element.isQueryable}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="supportedOperations">
+    <th mat-header-cell *matHeaderCellDef> supportedOperations </th>
+    <td mat-cell *matCellDef="let element"> {{ getSupportedOprationsName(element.supportedOperations)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isIdentity">
+    <th mat-header-cell *matHeaderCellDef> isIdentity </th>
+    <td mat-cell *matCellDef="let element"> {{element.isIdentity}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isPicklist">
+    <th mat-header-cell *matHeaderCellDef> isPicklist </th>
+    <td mat-cell *matCellDef="let element"> {{element.isPicklist}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isPicklistSuggested">
+    <th mat-header-cell *matHeaderCellDef> isPicklistSuggested </th>
+    <td mat-cell *matCellDef="let element"> {{element.isPicklistSuggested}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="url">
+    <th mat-header-cell *matHeaderCellDef> url </th>
+    <td mat-cell *matCellDef="let element"> {{element.url}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="isLocked">
+    <th mat-header-cell *matHeaderCellDef> isLocked </th>
+    <td mat-cell *matCellDef="let element"> {{element.isLocked}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+@if(isLoading){
+  <div class="overlay">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+}

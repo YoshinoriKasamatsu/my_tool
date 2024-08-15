@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="header">Azure DevOps Tool
+</mat-toolbar>
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <div class="button-row">
+
+      <button mat-flat-button routerLink="/workitems">WorkItems</button>
+      <button mat-flat-button routerLink="/pullrequests">PullRequests</button>
+
+      <button mat-flat-button routerLink="/fields">Fields</button>
+      <button mat-flat-button routerLink="/categories">Categories</button>
+      <button mat-flat-button routerLink="/classification">Classification</button>
+      <button mat-flat-button routerLink="/states">States</button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content >
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-toolbar color="primary" class="footer">
+  <button mat-flat-button (click)="onClickLoadData()">データ更新</button>
+</mat-toolbar>
+
+@if(isLoading){
+  <div class="overlay">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+}

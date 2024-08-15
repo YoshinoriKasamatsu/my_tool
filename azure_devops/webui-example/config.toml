@@ -1,0 +1,7 @@
+organization = ""
+project = "SmartHotel360"
+repository_id = "PublicWeb"
+pat = ""
+output_path = "./data"
+start_date = "2023/01/01 00:00:00"
+duration_days = 30

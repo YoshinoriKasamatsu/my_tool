@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CargoProjects">
+    <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="493d2dda-66c6-4303-9ded-022e3f1f3253" name="変更" comment="filter機能" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Rust File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;YoshinoriKasamatsu&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="e4ffb515-b701-48c7-a9cd-9f7ad69d7772" />
+        <option name="url" value="https://github.com/YoshinoriKasamatsu/webui-example.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="zo2kr5de" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2aWDI9D3UV5ymRYptyU4NX0n575" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Run.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/src/angular/app3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.start.executor": "Run",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "settings.editor.selected.configurable": "configurable.group.editor",
+    "ts.external.directory.path": "C:\\Users\\bizka\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\src\github\webui-example\web-frontend\src\app\common\model" />
+      <recent name="C:\src\github\webui-example\web-frontend\src\app\common\api" />
+    </key>
+    <key name="es6.move.members.recent.items">
+      <recent name="C:\src\github\webui-example\web-frontend\src\app\common\model\process.ts" />
+      <recent name="C:\src\github\webui-example\web-frontend\src\app\common\model\classification.ts" />
+      <recent name="C:\src\github\webui-example\web-frontend\src\app\common\model\category.ts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" nameIsGenerated="true">
+      <option name="command" value="run" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="emulateTerminal" value="false" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/web-frontend/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Cargo.Run" />
+      <item itemvalue="npm.start" />
+    </list>
+  </component>
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="アプリケーションレベル" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="デフォルトタスク">
+      <changelist id="493d2dda-66c6-4303-9ded-022e3f1f3253" name="変更" comment="" />
+      <created>1704425358696</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1704425358696</updated>
+      <workItem from="1704425359692" duration="291000" />
+      <workItem from="1704425667473" duration="30283000" />
+      <workItem from="1704513093342" duration="427000" />
+      <workItem from="1704513534492" duration="8967000" />
+      <workItem from="1704529308657" duration="75537000" />
+      <workItem from="1708239851688" duration="28000" />
+    </task>
+    <task id="LOCAL-00001" summary="WebApp first commit">
+      <option name="closed" value="true" />
+      <created>1704463577368</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704463577368</updated>
+    </task>
+    <task id="LOCAL-00002" summary="WebApp メニュー追加">
+      <option name="closed" value="true" />
+      <created>1704472493740</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1704472493740</updated>
+    </task>
+    <task id="LOCAL-00003" summary="WebApp デザイン変更">
+      <option name="closed" value="true" />
+      <created>1704506061611</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1704506061611</updated>
+    </task>
+    <task id="LOCAL-00004" summary="WebApp メタデータの表示追加">
+      <option name="closed" value="true" />
+      <created>1704533063838</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1704533063838</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Server WebAPI追加">
+      <option name="closed" value="true" />
+      <created>1704533145521</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1704533145521</updated>
+    </task>
+    <task id="LOCAL-00006" summary="データ同期機能追加">
+      <option name="closed" value="true" />
+      <created>1704607861213</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704607861213</updated>
+    </task>
+    <task id="LOCAL-00007" summary="データ読み込み中対応">
+      <option name="closed" value="true" />
+      <created>1704628193106</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1704628193106</updated>
+    </task>
+    <task id="LOCAL-00008" summary="データロード対象にworkitems_typesを追加">
+      <option name="closed" value="true" />
+      <created>1704639933464</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1704639933464</updated>
+    </task>
+    <task id="LOCAL-00009" summary="WebApi追加">
+      <option name="closed" value="true" />
+      <created>1704646508434</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1704646508434</updated>
+    </task>
+    <task id="LOCAL-00010" summary="WorkItems画面のフィルター追加準備">
+      <option name="closed" value="true" />
+      <created>1704646557116</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1704646557116</updated>
+    </task>
+    <task id="LOCAL-00011" summary="データロードにpullrequestsとレイアウト情報追加">
+      <option name="closed" value="true" />
+      <created>1704701957249</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1704701957249</updated>
+    </task>
+    <task id="LOCAL-00012" summary="filter機能">
+      <option name="closed" value="true" />
+      <created>1704753894039</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1704753894039</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="WebApp first commit" />
+    <MESSAGE value="WebApp メニュー追加" />
+    <MESSAGE value="WebApp デザイン変更" />
+    <MESSAGE value="WebApp メタデータの表示追加" />
+    <MESSAGE value="Server WebAPI追加" />
+    <MESSAGE value="データ同期機能追加" />
+    <MESSAGE value="データ読み込み中対応" />
+    <MESSAGE value="データロード対象にworkitems_typesを追加" />
+    <MESSAGE value="WebApi追加" />
+    <MESSAGE value="WorkItems画面のフィルター追加準備" />
+    <MESSAGE value="データロードにpullrequestsとレイアウト情報追加" />
+    <MESSAGE value="filter機能" />
+    <option name="LAST_COMMIT_MESSAGE" value="filter機能" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/web-frontend/src/app/contents/work-items/work-items.component.ts</url>
+          <line>143</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
