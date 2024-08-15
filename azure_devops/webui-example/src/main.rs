@@ -67,7 +67,7 @@ async fn main() -> std::io::Result<()> {
 
 
     let app_config: AppConfig = get_app_config().await;
-    println!("{:?}", &app_config);
+    // println!("{:?}", &app_config);
 
 
     log::info!("starting HTTP server at http://localhost:8080");

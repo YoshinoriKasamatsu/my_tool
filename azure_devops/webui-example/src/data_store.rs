@@ -29,7 +29,6 @@ pub async fn load_work_items() {
         let mut contents = String::new();
         file.read_to_string(&mut contents).await.unwrap();
         let json: Value = serde_json::from_str(&contents).unwrap();
-        // println!("{:?}", contents);
         work_items.push(json);
     }
     println!("{}", work_items.len());
