@@ -1,0 +1,1063 @@
+{
+  "path": "..\\example\\app\\app4\\app4.rc",
+  "lines": [
+    "﻿//Microsoft Visual C++ で生成されたリソース スクリプトです。",
+    "//",
+    "#include \"resource.h\"",
+    "",
+    "#define APSTUDIO_READONLY_SYMBOLS",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// TEXTINCLUDE 2 リソースから生成されました。",
+    "//",
+    "#ifndef APSTUDIO_INVOKED",
+    "#include \"targetver.h\"",
+    "#endif",
+    "#include \"afxres.h\"",
+    "#include \"verrsrc.h\"",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "#undef APSTUDIO_READONLY_SYMBOLS",
+    "",
+    "#ifdef APSTUDIO_INVOKED",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// TEXTINCLUDE",
+    "//",
+    "",
+    "1 TEXTINCLUDE",
+    "BEGIN",
+    "    \"resource.h\\0\"",
+    "END",
+    "",
+    "2 TEXTINCLUDE",
+    "BEGIN",
+    "    \"#ifndef APSTUDIO_INVOKED\\r\\n\"",
+    "    \"#include \"\"targetver.h\"\"\\r\\n\"",
+    "    \"#endif\\r\\n\"",
+    "    \"#include \"\"afxres.h\"\"\\r\\n\"",
+    "    \"#include \"\"verrsrc.h\"\"\\r\\n\"",
+    "    \"\\0\"",
+    "END",
+    "",
+    "3 TEXTINCLUDE",
+    "BEGIN",
+    "    \"#define _AFX_NO_OLE_RESOURCES\\r\\n\"",
+    "    \"#define _AFX_NO_TRACKER_RESOURCES\\r\\n\"",
+    "    \"#define _AFX_NO_PROPERTY_RESOURCES\\r\\n\"",
+    "    \"\\r\\n\"",
+    "    \"#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)\\r\\n\"",
+    "    \"LANGUAGE 17, 1\\r\\n\"",
+    "    \"#include \"\"res\\\\app4.rc2\"\"  // Microsoft Visual C++ 以外で編集されたリソース\\r\\n\"",
+    "    \"#include \"\"l.JPN\\\\afxres.rc\"\"      // 標準コンポーネント\\r\\n\"",
+    "    \"#include \"\"l.JPN\\\\afxprint.rc\"\"    // 印刷/印刷プレビュー リソース\\r\\n\"",
+    "    \"#if !defined(_AFXDLL)\\r\\n\"",
+    "    \"#include \"\"l.JPN\\\\afxribbon.rc\"\"        // MFC リボンおよびコントロール バー リソース\\r\\n\"",
+    "    \"#endif\\r\\n\"",
+    "    \"#endif\\r\\n\"",
+    "    \"\\0\"",
+    "END",
+    "",
+    "#endif    // APSTUDIO_INVOKED",
+    "",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// アイコン",
+    "//",
+    "",
+    "// アプリケーションのアイコンをすべてのシステム上で維持するために、最も小さい",
+    "// ID 値のアイコンが最初に配置されます。",
+    "",
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)",
+    "LANGUAGE 17, 1",
+    "IDR_MAINFRAME           ICON         \"res\\\\app4.ico\"",
+    "IDR_app4TYPE         ICON         \"res\\\\app4Doc.ico\"",
+    "#endif",
+    "IDI_FILE_VIEW           ICON         \"res\\\\file_view.ico\"",
+    "IDI_FILE_VIEW_HC        ICON         \"res\\\\file_view_hc.ico\"",
+    "IDI_CLASS_VIEW          ICON         \"res\\\\class_view.ico\"",
+    "IDI_CLASS_VIEW_HC       ICON         \"res\\\\class_view_hc.ico\"",
+    "IDI_OUTPUT_WND          ICON         \"res\\\\output_wnd.ico\"",
+    "IDI_OUTPUT_WND_HC       ICON         \"res\\\\output_wnd_hc.ico\"",
+    "IDI_PROPERTIES_WND      ICON         \"res\\\\properties_wnd.ico\"",
+    "IDI_PROPERTIES_WND_HC   ICON         \"res\\\\properties_wnd_hc.ico\"",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// ビットマップ",
+    "//",
+    "",
+    "IDR_MAINFRAME           BITMAP                  \"res\\\\Toolbar.bmp\"",
+    "IDR_MAINFRAME_256       BITMAP                  \"res\\\\Toolbar256.bmp\"",
+    "IDR_SORT                BITMAP                  \"res\\\\sort.bmp\"",
+    "IDB_SORT_24             BITMAP                  \"res\\\\sort_hc.bmp\"",
+    "IDB_FILE_VIEW           BITMAP                  \"res\\\\fileview.bmp\"",
+    "IDB_FILE_VIEW_24        BITMAP                  \"res\\\\fileview_hc.bmp\"",
+    "IDB_CLASS_VIEW          BITMAP                  \"res\\\\classview.bmp\"",
+    "IDB_CLASS_VIEW_24       BITMAP                  \"res\\\\classview_hc.bmp\"",
+    "IDR_EXPLORER            BITMAP                  \"res\\\\explorer.bmp\"",
+    "IDB_EXPLORER_24         BITMAP                  \"res\\\\explorer_hc.bmp\"",
+    "IDR_MENU_IMAGES         BITMAP                  \"res\\\\menuimages.bmp\"",
+    "IDB_MENU_IMAGES_24      BITMAP                  \"res\\\\menuimages_hc.bmp\"",
+    "IDR_PROPERTIES          BITMAP                  \"res\\\\properties.bmp\"",
+    "IDB_PROPERTIES_HC       BITMAP                  \"res\\\\properties_hc.bmp\"",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// ツール バー",
+    "//",
+    "",
+    "IDR_MAINFRAME TOOLBAR 16, 15",
+    "BEGIN",
+    "    BUTTON      ID_FILE_NEW",
+    "    BUTTON      ID_FILE_OPEN",
+    "    BUTTON      ID_FILE_SAVE",
+    "    SEPARATOR",
+    "    BUTTON      ID_EDIT_CUT",
+    "    BUTTON      ID_EDIT_COPY",
+    "    BUTTON      ID_EDIT_PASTE",
+    "    SEPARATOR",
+    "    BUTTON      ID_FILE_PRINT",
+    "    BUTTON      ID_APP_ABOUT",
+    "END",
+    "",
+    "IDR_MAINFRAME_256 TOOLBAR 16, 15",
+    "BEGIN",
+    "    BUTTON      ID_FILE_NEW",
+    "    BUTTON      ID_FILE_OPEN",
+    "    BUTTON      ID_FILE_SAVE",
+    "    SEPARATOR",
+    "    BUTTON      ID_EDIT_CUT",
+    "    BUTTON      ID_EDIT_COPY",
+    "    BUTTON      ID_EDIT_PASTE",
+    "    SEPARATOR",
+    "    BUTTON      ID_FILE_PRINT",
+    "    BUTTON      ID_APP_ABOUT",
+    "END",
+    "",
+    "",
+    "IDR_SORT TOOLBAR 16, 15",
+    "BEGIN",
+    "    BUTTON      ID_SORT_MENU",
+    "    BUTTON      ID_NEW_FOLDER",
+    "END",
+    "",
+    "IDR_EXPLORER TOOLBAR 16, 15",
+    "BEGIN",
+    "    BUTTON      ID_PROPERTIES",
+    "END",
+    "",
+    "IDR_MENU_IMAGES TOOLBAR 16, 15",
+    "BEGIN",
+    "    BUTTON      ID_WINDOW_MANAGER",
+    "    SEPARATOR",
+    "    BUTTON      ID_WINDOW_CASCADE",
+    "    BUTTON      ID_WINDOW_TILE_HORZ",
+    "    BUTTON      ID_TOOLS_MACRO",
+    "    BUTTON      ID_SORTING_SORTALPHABETIC",
+    "    BUTTON      ID_SORTING_SORTBYTYPE",
+    "    BUTTON      ID_SORTING_SORTBYACCESS",
+    "    BUTTON      ID_SORTING_GROUPBYTYPE",
+    "END",
+    "",
+    "IDR_PROPERTIES TOOLBAR 16, 15",
+    "BEGIN",
+    "    BUTTON      ID_EXPAND_ALL",
+    "    BUTTON      ID_SORTPROPERTIES",
+    "    BUTTON      ID_PROPERTIES1",
+    "    BUTTON      ID_PROPERTIES2",
+    "END",
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)",
+    "LANGUAGE 17, 1",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// メニュー",
+    "//",
+    "",
+    "IDR_MAINFRAME MENU",
+    "BEGIN",
+    "    POPUP \"ファイル(&F)\"",
+    "    BEGIN",
+    "        MENUITEM \"新しいフレーム(&F)\",                  ID_FILE_NEW_FRAME",
+    "        MENUITEM \"新規作成(&N)\\tCtrl+N\",                ID_FILE_NEW",
+    "        MENUITEM \"開く(&O)...\\tCtrl+O\",            ID_FILE_OPEN",
+    "        MENUITEM \"上書き保存(&S)\\tCtrl+S\",               ID_FILE_SAVE",
+    "        MENUITEM \"名前を付けて保存(&A)...\",                 ID_FILE_SAVE_AS",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"印刷(&P)...\\tCtrl+P\",           ID_FILE_PRINT",
+    "        MENUITEM \"印刷プレビュー(&V)\",              ID_FILE_PRINT_PREVIEW",
+    "        MENUITEM \"プリンターの設定(&R)...\",             ID_FILE_PRINT_SETUP",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"最近使ったファイル\",                 ID_FILE_MRU_FILE1,GRAYED",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"アプリケーションの終了(&X)\",                       ID_APP_EXIT",
+    "    END",
+    "    POPUP \"編集(&E)\"",
+    "    BEGIN",
+    "        MENUITEM \"元に戻す(&U)\\tCtrl+Z\",               ID_EDIT_UNDO",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"切り取り(&T)\\tCtrl+X\",                ID_EDIT_CUT",
+    "        MENUITEM \"コピー(&C)\\tCtrl+C\",               ID_EDIT_COPY",
+    "        MENUITEM \"貼り付け(&P)\\tCtrl+V\",              ID_EDIT_PASTE",
+    "    END",
+    "    POPUP \"表示(&V)\"",
+    "    BEGIN",
+    "        POPUP \"ツール バーとドッキング ウィンドウ(&T)\"",
+    "        BEGIN",
+    "            MENUITEM \"<placeholder>\",           ID_VIEW_TOOLBAR",
+    "        END",
+    "        MENUITEM \"ステータス バー(&S)\",                 ID_VIEW_STATUS_BAR",
+    "        POPUP \"アプリケーションの外観(&A)\"",
+    "        BEGIN",
+    "            MENUITEM \"Windows 2000(&2)\",           ID_VIEW_APPLOOK_WIN_2000",
+    "            MENUITEM \"Office XP(&X)\",              ID_VIEW_APPLOOK_OFF_XP",
+    "            MENUITEM \"Windows XP(&W)\",             ID_VIEW_APPLOOK_WIN_XP",
+    "            MENUITEM \"Office 2003(&3)\",            ID_VIEW_APPLOOK_OFF_2003",
+    "            MENUITEM \"Visual Studio 2005(&5)\",     ID_VIEW_APPLOOK_VS_2005",
+    "            MENUITEM \"Visual Studio 2008(&8)\",     ID_VIEW_APPLOOK_VS_2008",
+    "            POPUP \"Office 2007(&7)\"",
+    "            BEGIN",
+    "                MENUITEM \"ブルー スタイル(&B)\",         ID_VIEW_APPLOOK_OFF_2007_BLUE",
+    "                MENUITEM \"ブラック スタイル(&L)\",        ID_VIEW_APPLOOK_OFF_2007_BLACK",
+    "                MENUITEM \"シルバー スタイル(&S)\",       ID_VIEW_APPLOOK_OFF_2007_SILVER",
+    "                MENUITEM \"アクア スタイル(&A)\",         ID_VIEW_APPLOOK_OFF_2007_AQUA",
+    "            END",
+    "        END",
+    "    END",
+    "    POPUP \"ヘルプ(&H)\"",
+    "    BEGIN",
+    "        MENUITEM \"app4について(&A)...\",          ID_APP_ABOUT",
+    "    END",
+    "END",
+    "",
+    "",
+    "",
+    "IDR_POPUP_EDIT MENU",
+    "BEGIN",
+    "\tPOPUP \"編集\"",
+    "\tBEGIN",
+    "\t\tMENUITEM \"切り取り(&T)\\tCtrl+X\",            ID_EDIT_CUT",
+    "\t\tMENUITEM \"コピー(&C)\\tCtrl+C\",           ID_EDIT_COPY",
+    "\t\tMENUITEM \"貼り付け(&P)\\tCtrl+V\",          ID_EDIT_PASTE",
+    "    END",
+    "END",
+    "",
+    "IDR_POPUP_SORT MENU",
+    "BEGIN",
+    "    POPUP \"並べ替え\"",
+    "    BEGIN",
+    "        MENUITEM \"アルファベット順に並べ替え(&S)\",         ID_SORTING_SORTALPHABETIC",
+    "        MENUITEM \"種類で並べ替え(&T)\",               ID_SORTING_SORTBYTYPE",
+    "        MENUITEM \"アクセスで並べ替え(&E)\",             ID_SORTING_SORTBYACCESS",
+    "        MENUITEM \"種類でグループ化(&Y)\",              ID_SORTING_GROUPBYTYPE",
+    "    END",
+    "END",
+    "",
+    "IDR_POPUP_EXPLORER MENU",
+    "BEGIN",
+    "    POPUP \"エクスプローラー\"",
+    "    BEGIN",
+    "        MENUITEM \"開く(&O)\",                       ID_OPEN",
+    "        MENUITEM \"ファイルを開くアプリケーションの選択(&W)...\",              ID_OPEN_WITH",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"コンパイル(&C)\",                    ID_DUMMY_COMPILE",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"切り取り(&T)\\tCtrl+X\",                ID_EDIT_CUT",
+    "        MENUITEM \"コピー(&C)\\tCtrl+C\",               ID_EDIT_COPY",
+    "        MENUITEM \"削除(&R)\",                     ID_EDIT_CLEAR",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"プロパティ(&P)...\",              ID_PROPERTIES",
+    "    END",
+    "END",
+    "",
+    "IDR_OUTPUT_POPUP MENU",
+    "BEGIN",
+    "    POPUP \"ポップアップ\"",
+    "    BEGIN",
+    "        MENUITEM \"コピー(&C)\",                       ID_EDIT_COPY",
+    "        MENUITEM \"クリア(&C)\",                      ID_EDIT_CLEAR",
+    "        MENUITEM SEPARATOR",
+    "        MENUITEM \"非表示(&H)\",                       ID_VIEW_OUTPUTWND",
+    "    END",
+    "END",
+    "",
+    "IDR_HELP_MENU MENU",
+    "BEGIN",
+    "    MENUITEM \"app4について(&A)...\",          ID_APP_ABOUT",
+    "END",
+    "",
+    "IDR_THEME_MENU MENU",
+    "BEGIN",
+    "    MENUITEM \"Office 2007 (ブルー スタイル)(&B)\",       ID_VIEW_APPLOOK_OFF_2007_BLUE",
+    "    MENUITEM \"Office 2007 (ブラック スタイル)(&L)\",      ID_VIEW_APPLOOK_OFF_2007_BLACK",
+    "    MENUITEM \"Office 2007 (シルバー スタイル)(&S)\",     ID_VIEW_APPLOOK_OFF_2007_SILVER",
+    "    MENUITEM \"Office 2007 (アクア スタイル)(&A)\",       ID_VIEW_APPLOOK_OFF_2007_AQUA",
+    "    MENUITEM \"Windows 7(&D)\",                      ID_VIEW_APPLOOK_WINDOWS_7",
+    "END",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// アクセラレータ",
+    "//",
+    "",
+    "IDR_MAINFRAME ACCELERATORS",
+    "BEGIN",
+    "    \"N\",            ID_FILE_NEW,            VIRTKEY,CONTROL",
+    "    \"O\",            ID_FILE_OPEN,           VIRTKEY,CONTROL",
+    "    \"S\",            ID_FILE_SAVE,           VIRTKEY,CONTROL",
+    "    \"P\",            ID_FILE_PRINT,          VIRTKEY,CONTROL",
+    "\t\"Z\",            ID_EDIT_UNDO,           VIRTKEY,CONTROL",
+    "\t\"X\",            ID_EDIT_CUT,            VIRTKEY,CONTROL",
+    "\t\"C\",            ID_EDIT_COPY,           VIRTKEY,CONTROL",
+    "\t\"V\",            ID_EDIT_PASTE,          VIRTKEY,CONTROL",
+    "    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY,ALT",
+    "    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY,SHIFT",
+    "    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY,CONTROL",
+    "    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY,SHIFT",
+    "    VK_F6,          ID_NEXT_PANE,           VIRTKEY",
+    "    VK_F6,          ID_PREV_PANE,           VIRTKEY,SHIFT",
+    "END",
+    "",
+    "",
+    "",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// ダイアログ",
+    "//",
+    "",
+    "IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62",
+    "STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU",
+    "CAPTION \"app4 について\"",
+    "FONT 9, \"MS UI Gothic\"",
+    "BEGIN",
+    "    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20",
+    "    LTEXT           \"app4、バージョン 1.0\",IDC_STATIC,42,14,114,8,SS_NOPREFIX",
+    "    LTEXT           \"Copyright (C) 2024\",IDC_STATIC,42,26,114,8",
+    "    DEFPUSHBUTTON   \"OK\",IDOK,113,41,50,14,WS_GROUP",
+    "END",
+    "",
+    "",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// バージョン",
+    "//",
+    "",
+    "VS_VERSION_INFO     VERSIONINFO",
+    "  FILEVERSION       1,0,0,1",
+    "  PRODUCTVERSION    1,0,0,1",
+    " FILEFLAGSMASK VS_FFI_FILEFLAGSMASK",
+    "#ifdef _DEBUG",
+    " FILEFLAGS VS_FF_DEBUG",
+    "#else",
+    " FILEFLAGS 0x0L",
+    "#endif",
+    " FILEOS VOS_NT_WINDOWS32",
+    " FILETYPE VFT_APP",
+    " FILESUBTYPE VFT2_UNKNOWN",
+    "BEGIN",
+    "    BLOCK \"StringFileInfo\"",
+    "    BEGIN",
+    "        BLOCK \"041104B0\"",
+    "        BEGIN",
+    "            VALUE \"CompanyName\", \"TODO: <会社名>\"",
+    "            VALUE \"FileDescription\", \"app4\"",
+    "            VALUE \"FileVersion\",     \"1.0.0.1\"",
+    "            VALUE \"InternalName\",    \"app4.exe\"",
+    "            VALUE \"LegalCopyright\", \"TODO: (C) <会社名>.  All rights reserved.\"",
+    "            VALUE \"OriginalFilename\",\"app4.exe\"",
+    "            VALUE \"ProductName\", \"TODO: <製品名>\"",
+    "            VALUE \"ProductVersion\",  \"1.0.0.1\"",
+    "        END",
+    "    END",
+    "    BLOCK \"VarFileInfo\"",
+    "    BEGIN",
+    "        VALUE \"Translation\", 0x0411, 1200",
+    "    END",
+    "END",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// DESIGNINFO",
+    "//",
+    "",
+    "#ifdef APSTUDIO_INVOKED",
+    "GUIDELINES DESIGNINFO",
+    "BEGIN",
+    "    IDD_ABOUTBOX, DIALOG",
+    "    BEGIN",
+    "        LEFTMARGIN, 7",
+    "        RIGHTMARGIN, 163",
+    "        TOPMARGIN, 7",
+    "        BOTTOMMARGIN, 55",
+    "    END",
+    "END",
+    "#endif    // APSTUDIO_INVOKED",
+    "",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// ストリング テーブル",
+    "//",
+    "",
+    "STRINGTABLE",
+    "BEGIN",
+    "    IDP_OLE_INIT_FAILED       \"OLE の初期化に失敗しました。OLE ライブラリのバージョンが正しいことを確認してください。\"",
+    "END",
+    "STRINGTABLE",
+    "BEGIN",
+    "// MAC を対象としないアプリケーションから 2 つの余分な部分文字列を削除します。",
+    "    IDR_MAINFRAME           \"app4\\n\\napp4\\n\\n\\napp4.Document\\napp4.Document\"",
+    "",
+    "END",
+    "STRINGTABLE",
+    "BEGIN",
+    "    AFX_IDS_APP_TITLE       \"app4\"",
+    "    AFX_IDS_IDLEMESSAGE     \"準備完了\"",
+    "END",
+    "STRINGTABLE",
+    "BEGIN",
+    "    ID_INDICATOR_EXT        \"EXT\"",
+    "    ID_INDICATOR_CAPS       \"CAP\"",
+    "    ID_INDICATOR_NUM        \"NUM\"",
+    "    ID_INDICATOR_SCRL       \"SCRL\"",
+    "    ID_INDICATOR_OVR        \"OVR\"",
+    "    ID_INDICATOR_REC        \"REC\"",
+    "END",
+    "STRINGTABLE",
+    "BEGIN",
+    "    ID_FILE_NEW_FRAME        \"新しいフレームを作成\\n新しいフレーム\"",
+    "    IDS_CLOSE                \"閉じる\"",
+    "    ID_FILE_NEW             \"新しいドキュメントを作成\\n新規作成\"",
+    "    ID_FILE_OPEN            \"既存のドキュメントを開く\\n開く\"",
+    "    ID_FILE_CLOSE           \"作業中のドキュメントを閉じる\\n閉じる\"",
+    "    ID_FILE_SAVE            \"作業中のドキュメントを上書きして保存\\n保存\"",
+    "    ID_FILE_SAVE_AS         \"作業中のドキュメントを新しい名前で保存\\n名前をつけて保存\"",
+    "    ID_FILE_PAGE_SETUP      \"印刷オプションの変更\\nページ レイアウトの設定\"",
+    "    ID_FILE_PRINT_SETUP     \"プリンターおよび印刷オプションの変更\\n印刷設定\"",
+    "    ID_FILE_PRINT_DIRECT    \"作業中のドキュメントを現在のオプションで印刷\\nクイック印刷\"",
+    "    ID_FILE_PRINT           \"作業中のドキュメントを印刷\\n印刷\"",
+    "    ID_FILE_PRINT_PREVIEW   \"印刷イメージを表示\\n印刷プレビュー\"",
+    "    ID_APP_ABOUT            \"プログラム情報、バージョン、著作権を表示します。\\nバージョン情報\"",
+    "    ID_APP_EXIT             \"アプリケーションを終了し、ドキュメントの保存を指示\\n終了\"",
+    "    ID_FILE_MRU_FILE1       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE2       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE3       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE4       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE5       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE6       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE7       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE8       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE9       \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE10      \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE11      \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE12      \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE13      \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE14      \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE15      \"指定のドキュメントを開く\"",
+    "    ID_FILE_MRU_FILE16      \"指定のドキュメントを開く\"",
+    "    ID_NEXT_PANE            \"次のウィンドウに切り替える\\n次のペイン\"",
+    "    ID_PREV_PANE            \"前のウィンドウに切り替える\\n前のペイン\"",
+    "    ID_WINDOW_SPLIT         \"作業中のウィンドウを分割\\n分割\"",
+    "    ID_EDIT_CLEAR           \"選択範囲を消去\\n消去\"",
+    "    ID_EDIT_CLEAR_ALL       \"すべて消去\\nすべて消去\"",
+    "    ID_EDIT_COPY            \"選択範囲をコピーしてクリップボードに保存\\nコピー\"",
+    "    ID_EDIT_CUT             \"選択範囲を切り取ってクリップボードに保存\\n切り取り\"",
+    "    ID_EDIT_FIND            \"指定した文字列の検索\\n検索\"",
+    "    ID_EDIT_PASTE           \"クリップボードの内容を貼り付け\\n貼り付け\"",
+    "    ID_EDIT_REPEAT          \"直前に行った動作を繰り返す\\n繰り返し\"",
+    "    ID_EDIT_REPLACE         \"指定した文字列を他の文字列で置換\\n置換\"",
+    "    ID_EDIT_SELECT_ALL      \"ファイル内のすべてを選択\\nすべて選択\"",
+    "    ID_EDIT_UNDO            \"直前に行った動作を元に戻す\\n元に戻す\"",
+    "    ID_EDIT_REDO            \"取り消した操作をやり直す\\nやり直す\"",
+    "    ID_VIEW_STATUS_BAR      \"ステータス バーの表示/非表示\\nステータス バーの表示切り替え\"",
+    "END",
+    "",
+    "STRINGTABLE",
+    "BEGIN",
+    "    AFX_IDS_SCSIZE          \"ウィンドウのサイズを変更\"",
+    "    AFX_IDS_SCMOVE          \"ウィンドウの位置を変更\"",
+    "    AFX_IDS_SCMINIMIZE      \"ウィンドウを最小化する\"",
+    "    AFX_IDS_SCMAXIMIZE      \"ウィンドウを最大化する\"",
+    "    AFX_IDS_SCNEXTWINDOW    \"次のドキュメント ウィンドウに切り替える\"",
+    "    AFX_IDS_SCPREVWINDOW    \"前のドキュメント ウィンドウに切り替える\"",
+    "    AFX_IDS_SCCLOSE         \"作業中のウィンドウを閉じ、変更したドキュメントの保存を指示\"",
+    "    AFX_IDS_SCRESTORE       \"ウィンドウを通常のサイズに戻す\"",
+    "    AFX_IDS_SCTASKLIST      \"タスク一覧をアクティブにする\"",
+    "    AFX_IDS_PREVIEW_CLOSE   \"印刷プレビュー モードの終わり\\nプレビューのキャンセル\"",
+    "END",
+    "",
+    "",
+    "STRINGTABLE",
+    "BEGIN",
+    "    IDS_STATUS_PANE1        \"ペイン 1\"",
+    "    IDS_STATUS_PANE2        \"ペイン 2\"",
+    "    IDS_TOOLBAR_STANDARD    \"標準\"",
+    "    IDS_TOOLBAR_CUSTOMIZE   \"カスタマイズ...\"",
+    "    IDS_FILE_VIEW           \"ファイル ビュー\"",
+    "    IDS_CLASS_VIEW          \"クラス ビュー\"",
+    "    IDS_EXPLORER            \"エクスプローラー\"",
+    "    IDS_OUTPUT_WND          \"出力\"",
+    "    IDS_BUILD_TAB           \"ビルド\"",
+    "    IDS_DEBUG_TAB           \"デバッグ\"",
+    "    IDS_FIND_TAB            \"検索\"",
+    "    IDS_PROPERTIES_WND      \"プロパティ\"",
+    "    IDS_EDIT_MENU           \"編集\"",
+    "END",
+    "#endif",
+    "",
+    "#ifndef APSTUDIO_INVOKED",
+    "/////////////////////////////////////////////////////////////////////////////",
+    "//",
+    "// TEXTINCLUDE 3 リソースから生成されました。",
+    "//",
+    "",
+    "#define _AFX_NO_OLE_RESOURCES",
+    "#define _AFX_NO_TRACKER_RESOURCES",
+    "#define _AFX_NO_PROPERTY_RESOURCES",
+    "",
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_JPN)",
+    "LANGUAGE 17, 1",
+    "#include \"res\\\\app4.rc2\"  // Microsoft Visual C++ 以外で編集されたリソース",
+    "#include \"l.JPN\\\\afxres.rc\"      // 標準コンポーネント",
+    "#include \"l.JPN\\\\afxprint.rc\"  // 印刷/印刷プレビュー リソース",
+    "#if !defined(_AFXDLL)",
+    "#include \"l.JPN\\\\afxribbon.rc\"        // MFC のリボン リソースとコントロール バー リソース",
+    "#endif",
+    "#endif",
+    "#endif    // APSTUDIO_INVOKED でない場合",
+    ""
+  ],
+  "resource_blocks": [
+    {
+      "resource_type": "DIALOG",
+      "lines": [
+        "IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62",
+        "STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU",
+        "CAPTION \"app4 について\"",
+        "FONT 9, \"MS UI Gothic\"",
+        "BEGIN",
+        "    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20",
+        "    LTEXT           \"app4、バージョン 1.0\",IDC_STATIC,42,14,114,8,SS_NOPREFIX",
+        "    LTEXT           \"Copyright (C) 2024\",IDC_STATIC,42,26,114,8",
+        "    DEFPUSHBUTTON   \"OK\",IDOK,113,41,50,14,WS_GROUP",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "    IDP_OLE_INIT_FAILED       \"OLE の初期化に失敗しました。OLE ライブラリのバージョンが正しいことを確認してください。\"",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "// MAC を対象としないアプリケーションから 2 つの余分な部分文字列を削除します。",
+        "    IDR_MAINFRAME           \"app4\\n\\napp4\\n\\n\\napp4.Document\\napp4.Document\"",
+        "",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "    AFX_IDS_APP_TITLE       \"app4\"",
+        "    AFX_IDS_IDLEMESSAGE     \"準備完了\"",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "    ID_INDICATOR_EXT        \"EXT\"",
+        "    ID_INDICATOR_CAPS       \"CAP\"",
+        "    ID_INDICATOR_NUM        \"NUM\"",
+        "    ID_INDICATOR_SCRL       \"SCRL\"",
+        "    ID_INDICATOR_OVR        \"OVR\"",
+        "    ID_INDICATOR_REC        \"REC\"",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "    ID_FILE_NEW_FRAME        \"新しいフレームを作成\\n新しいフレーム\"",
+        "    IDS_CLOSE                \"閉じる\"",
+        "    ID_FILE_NEW             \"新しいドキュメントを作成\\n新規作成\"",
+        "    ID_FILE_OPEN            \"既存のドキュメントを開く\\n開く\"",
+        "    ID_FILE_CLOSE           \"作業中のドキュメントを閉じる\\n閉じる\"",
+        "    ID_FILE_SAVE            \"作業中のドキュメントを上書きして保存\\n保存\"",
+        "    ID_FILE_SAVE_AS         \"作業中のドキュメントを新しい名前で保存\\n名前をつけて保存\"",
+        "    ID_FILE_PAGE_SETUP      \"印刷オプションの変更\\nページ レイアウトの設定\"",
+        "    ID_FILE_PRINT_SETUP     \"プリンターおよび印刷オプションの変更\\n印刷設定\"",
+        "    ID_FILE_PRINT_DIRECT    \"作業中のドキュメントを現在のオプションで印刷\\nクイック印刷\"",
+        "    ID_FILE_PRINT           \"作業中のドキュメントを印刷\\n印刷\"",
+        "    ID_FILE_PRINT_PREVIEW   \"印刷イメージを表示\\n印刷プレビュー\"",
+        "    ID_APP_ABOUT            \"プログラム情報、バージョン、著作権を表示します。\\nバージョン情報\"",
+        "    ID_APP_EXIT             \"アプリケーションを終了し、ドキュメントの保存を指示\\n終了\"",
+        "    ID_FILE_MRU_FILE1       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE2       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE3       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE4       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE5       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE6       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE7       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE8       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE9       \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE10      \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE11      \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE12      \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE13      \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE14      \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE15      \"指定のドキュメントを開く\"",
+        "    ID_FILE_MRU_FILE16      \"指定のドキュメントを開く\"",
+        "    ID_NEXT_PANE            \"次のウィンドウに切り替える\\n次のペイン\"",
+        "    ID_PREV_PANE            \"前のウィンドウに切り替える\\n前のペイン\"",
+        "    ID_WINDOW_SPLIT         \"作業中のウィンドウを分割\\n分割\"",
+        "    ID_EDIT_CLEAR           \"選択範囲を消去\\n消去\"",
+        "    ID_EDIT_CLEAR_ALL       \"すべて消去\\nすべて消去\"",
+        "    ID_EDIT_COPY            \"選択範囲をコピーしてクリップボードに保存\\nコピー\"",
+        "    ID_EDIT_CUT             \"選択範囲を切り取ってクリップボードに保存\\n切り取り\"",
+        "    ID_EDIT_FIND            \"指定した文字列の検索\\n検索\"",
+        "    ID_EDIT_PASTE           \"クリップボードの内容を貼り付け\\n貼り付け\"",
+        "    ID_EDIT_REPEAT          \"直前に行った動作を繰り返す\\n繰り返し\"",
+        "    ID_EDIT_REPLACE         \"指定した文字列を他の文字列で置換\\n置換\"",
+        "    ID_EDIT_SELECT_ALL      \"ファイル内のすべてを選択\\nすべて選択\"",
+        "    ID_EDIT_UNDO            \"直前に行った動作を元に戻す\\n元に戻す\"",
+        "    ID_EDIT_REDO            \"取り消した操作をやり直す\\nやり直す\"",
+        "    ID_VIEW_STATUS_BAR      \"ステータス バーの表示/非表示\\nステータス バーの表示切り替え\"",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "    AFX_IDS_SCSIZE          \"ウィンドウのサイズを変更\"",
+        "    AFX_IDS_SCMOVE          \"ウィンドウの位置を変更\"",
+        "    AFX_IDS_SCMINIMIZE      \"ウィンドウを最小化する\"",
+        "    AFX_IDS_SCMAXIMIZE      \"ウィンドウを最大化する\"",
+        "    AFX_IDS_SCNEXTWINDOW    \"次のドキュメント ウィンドウに切り替える\"",
+        "    AFX_IDS_SCPREVWINDOW    \"前のドキュメント ウィンドウに切り替える\"",
+        "    AFX_IDS_SCCLOSE         \"作業中のウィンドウを閉じ、変更したドキュメントの保存を指示\"",
+        "    AFX_IDS_SCRESTORE       \"ウィンドウを通常のサイズに戻す\"",
+        "    AFX_IDS_SCTASKLIST      \"タスク一覧をアクティブにする\"",
+        "    AFX_IDS_PREVIEW_CLOSE   \"印刷プレビュー モードの終わり\\nプレビューのキャンセル\"",
+        "END"
+      ]
+    },
+    {
+      "resource_type": "STRING",
+      "lines": [
+        "BEGIN",
+        "    IDS_STATUS_PANE1        \"ペイン 1\"",
+        "    IDS_STATUS_PANE2        \"ペイン 2\"",
+        "    IDS_TOOLBAR_STANDARD    \"標準\"",
+        "    IDS_TOOLBAR_CUSTOMIZE   \"カスタマイズ...\"",
+        "    IDS_FILE_VIEW           \"ファイル ビュー\"",
+        "    IDS_CLASS_VIEW          \"クラス ビュー\"",
+        "    IDS_EXPLORER            \"エクスプローラー\"",
+        "    IDS_OUTPUT_WND          \"出力\"",
+        "    IDS_BUILD_TAB           \"ビルド\"",
+        "    IDS_DEBUG_TAB           \"デバッグ\"",
+        "    IDS_FIND_TAB            \"検索\"",
+        "    IDS_PROPERTIES_WND      \"プロパティ\"",
+        "    IDS_EDIT_MENU           \"編集\"",
+        "END"
+      ]
+    }
+  ],
+  "dialogs": [
+    {
+      "id": "IDD_ABOUTBOX",
+      "styles": [
+        "STYLE DS_SETFONT",
+        "DS_MODALFRAME",
+        "DS_FIXEDSYS",
+        "WS_POPUP",
+        "WS_CAPTION",
+        "WS_SYSMENU"
+      ],
+      "text": "\"app4",
+      "font": {
+        "size": 9,
+        "name": " \"MS UI Gothic\""
+      },
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 170,
+        "height": 62
+      },
+      "controls": [
+        {
+          "id": "IDC_STATIC",
+          "class": "ICON",
+          "text": "IDR_MAINFRAME",
+          "x": 14,
+          "y": 14,
+          "width": 21,
+          "height": 20
+        },
+        {
+          "id": "IDC_STATIC",
+          "class": "LTEXT",
+          "text": "\"app4、バージョン 1.0\"",
+          "x": 42,
+          "y": 14,
+          "width": 114,
+          "height": 8
+        },
+        {
+          "id": "IDC_STATIC",
+          "class": "LTEXT",
+          "text": "\"Copyright (C) 2024\"",
+          "x": 42,
+          "y": 26,
+          "width": 114,
+          "height": 8
+        },
+        {
+          "id": "IDOK",
+          "class": "DEFPUSHBUTTON",
+          "text": "\"OK\"",
+          "x": 113,
+          "y": 41,
+          "width": 50,
+          "height": 14
+        }
+      ],
+      "code_infos": [],
+      "header_files": [],
+      "reference_string_table_ids": []
+    }
+  ],
+  "string_tables": [
+    {
+      "id": "IDP_OLE_INIT_FAILED",
+      "text": "\"OLE の初期化に失敗しました。OLE ライブラリのバージョンが正しいことを確認してください。\""
+    },
+    {
+      "id": "//",
+      "text": "MAC を対象としないアプリケーションから 2 つの余分な部分文字列を削除します。"
+    },
+    {
+      "id": "IDR_MAINFRAME",
+      "text": "\"app4\\n\\napp4\\n\\n\\napp4.Document\\napp4.Document\""
+    },
+    {
+      "id": "AFX_IDS_APP_TITLE",
+      "text": "\"app4\""
+    },
+    {
+      "id": "AFX_IDS_IDLEMESSAGE",
+      "text": "\"準備完了\""
+    },
+    {
+      "id": "ID_INDICATOR_EXT",
+      "text": "\"EXT\""
+    },
+    {
+      "id": "ID_INDICATOR_CAPS",
+      "text": "\"CAP\""
+    },
+    {
+      "id": "ID_INDICATOR_NUM",
+      "text": "\"NUM\""
+    },
+    {
+      "id": "ID_INDICATOR_SCRL",
+      "text": "\"SCRL\""
+    },
+    {
+      "id": "ID_INDICATOR_OVR",
+      "text": "\"OVR\""
+    },
+    {
+      "id": "ID_INDICATOR_REC",
+      "text": "\"REC\""
+    },
+    {
+      "id": "ID_FILE_NEW_FRAME",
+      "text": "\"新しいフレームを作成\\n新しいフレーム\""
+    },
+    {
+      "id": "IDS_CLOSE",
+      "text": "\"閉じる\""
+    },
+    {
+      "id": "ID_FILE_NEW",
+      "text": "\"新しいドキュメントを作成\\n新規作成\""
+    },
+    {
+      "id": "ID_FILE_OPEN",
+      "text": "\"既存のドキュメントを開く\\n開く\""
+    },
+    {
+      "id": "ID_FILE_CLOSE",
+      "text": "\"作業中のドキュメントを閉じる\\n閉じる\""
+    },
+    {
+      "id": "ID_FILE_SAVE",
+      "text": "\"作業中のドキュメントを上書きして保存\\n保存\""
+    },
+    {
+      "id": "ID_FILE_SAVE_AS",
+      "text": "\"作業中のドキュメントを新しい名前で保存\\n名前をつけて保存\""
+    },
+    {
+      "id": "ID_FILE_PAGE_SETUP",
+      "text": "\"印刷オプションの変更\\nページ レイアウトの設定\""
+    },
+    {
+      "id": "ID_FILE_PRINT_SETUP",
+      "text": "\"プリンターおよび印刷オプションの変更\\n印刷設定\""
+    },
+    {
+      "id": "ID_FILE_PRINT_DIRECT",
+      "text": "\"作業中のドキュメントを現在のオプションで印刷\\nクイック印刷\""
+    },
+    {
+      "id": "ID_FILE_PRINT",
+      "text": "\"作業中のドキュメントを印刷\\n印刷\""
+    },
+    {
+      "id": "ID_FILE_PRINT_PREVIEW",
+      "text": "\"印刷イメージを表示\\n印刷プレビュー\""
+    },
+    {
+      "id": "ID_APP_ABOUT",
+      "text": "\"プログラム情報、バージョン、著作権を表示します。\\nバージョン情報\""
+    },
+    {
+      "id": "ID_APP_EXIT",
+      "text": "\"アプリケーションを終了し、ドキュメントの保存を指示\\n終了\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE1",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE2",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE3",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE4",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE5",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE6",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE7",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE8",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE9",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE10",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE11",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE12",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE13",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE14",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE15",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_FILE_MRU_FILE16",
+      "text": "\"指定のドキュメントを開く\""
+    },
+    {
+      "id": "ID_NEXT_PANE",
+      "text": "\"次のウィンドウに切り替える\\n次のペイン\""
+    },
+    {
+      "id": "ID_PREV_PANE",
+      "text": "\"前のウィンドウに切り替える\\n前のペイン\""
+    },
+    {
+      "id": "ID_WINDOW_SPLIT",
+      "text": "\"作業中のウィンドウを分割\\n分割\""
+    },
+    {
+      "id": "ID_EDIT_CLEAR",
+      "text": "\"選択範囲を消去\\n消去\""
+    },
+    {
+      "id": "ID_EDIT_CLEAR_ALL",
+      "text": "\"すべて消去\\nすべて消去\""
+    },
+    {
+      "id": "ID_EDIT_COPY",
+      "text": "\"選択範囲をコピーしてクリップボードに保存\\nコピー\""
+    },
+    {
+      "id": "ID_EDIT_CUT",
+      "text": "\"選択範囲を切り取ってクリップボードに保存\\n切り取り\""
+    },
+    {
+      "id": "ID_EDIT_FIND",
+      "text": "\"指定した文字列の検索\\n検索\""
+    },
+    {
+      "id": "ID_EDIT_PASTE",
+      "text": "\"クリップボードの内容を貼り付け\\n貼り付け\""
+    },
+    {
+      "id": "ID_EDIT_REPEAT",
+      "text": "\"直前に行った動作を繰り返す\\n繰り返し\""
+    },
+    {
+      "id": "ID_EDIT_REPLACE",
+      "text": "\"指定した文字列を他の文字列で置換\\n置換\""
+    },
+    {
+      "id": "ID_EDIT_SELECT_ALL",
+      "text": "\"ファイル内のすべてを選択\\nすべて選択\""
+    },
+    {
+      "id": "ID_EDIT_UNDO",
+      "text": "\"直前に行った動作を元に戻す\\n元に戻す\""
+    },
+    {
+      "id": "ID_EDIT_REDO",
+      "text": "\"取り消した操作をやり直す\\nやり直す\""
+    },
+    {
+      "id": "ID_VIEW_STATUS_BAR",
+      "text": "\"ステータス バーの表示/非表示\\nステータス バーの表示切り替え\""
+    },
+    {
+      "id": "AFX_IDS_SCSIZE",
+      "text": "\"ウィンドウのサイズを変更\""
+    },
+    {
+      "id": "AFX_IDS_SCMOVE",
+      "text": "\"ウィンドウの位置を変更\""
+    },
+    {
+      "id": "AFX_IDS_SCMINIMIZE",
+      "text": "\"ウィンドウを最小化する\""
+    },
+    {
+      "id": "AFX_IDS_SCMAXIMIZE",
+      "text": "\"ウィンドウを最大化する\""
+    },
+    {
+      "id": "AFX_IDS_SCNEXTWINDOW",
+      "text": "\"次のドキュメント ウィンドウに切り替える\""
+    },
+    {
+      "id": "AFX_IDS_SCPREVWINDOW",
+      "text": "\"前のドキュメント ウィンドウに切り替える\""
+    },
+    {
+      "id": "AFX_IDS_SCCLOSE",
+      "text": "\"作業中のウィンドウを閉じ、変更したドキュメントの保存を指示\""
+    },
+    {
+      "id": "AFX_IDS_SCRESTORE",
+      "text": "\"ウィンドウを通常のサイズに戻す\""
+    },
+    {
+      "id": "AFX_IDS_SCTASKLIST",
+      "text": "\"タスク一覧をアクティブにする\""
+    },
+    {
+      "id": "AFX_IDS_PREVIEW_CLOSE",
+      "text": "\"印刷プレビュー モードの終わり\\nプレビューのキャンセル\""
+    },
+    {
+      "id": "IDS_STATUS_PANE1",
+      "text": "\"ペイン 1\""
+    },
+    {
+      "id": "IDS_STATUS_PANE2",
+      "text": "\"ペイン 2\""
+    },
+    {
+      "id": "IDS_TOOLBAR_STANDARD",
+      "text": "\"標準\""
+    },
+    {
+      "id": "IDS_TOOLBAR_CUSTOMIZE",
+      "text": "\"カスタマイズ...\""
+    },
+    {
+      "id": "IDS_FILE_VIEW",
+      "text": "\"ファイル ビュー\""
+    },
+    {
+      "id": "IDS_CLASS_VIEW",
+      "text": "\"クラス ビュー\""
+    },
+    {
+      "id": "IDS_EXPLORER",
+      "text": "\"エクスプローラー\""
+    },
+    {
+      "id": "IDS_OUTPUT_WND",
+      "text": "\"出力\""
+    },
+    {
+      "id": "IDS_BUILD_TAB",
+      "text": "\"ビルド\""
+    },
+    {
+      "id": "IDS_DEBUG_TAB",
+      "text": "\"デバッグ\""
+    },
+    {
+      "id": "IDS_FIND_TAB",
+      "text": "\"検索\""
+    },
+    {
+      "id": "IDS_PROPERTIES_WND",
+      "text": "\"プロパティ\""
+    },
+    {
+      "id": "IDS_EDIT_MENU",
+      "text": "\"編集\""
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+﻿  pch.cpp
+  app2.cpp
+  app2Doc.cpp
+  app2View.cpp
+  ChildFrm.cpp
+  ClassView.cpp
+  FileView.cpp
+  MainFrm.cpp
+  OutputWnd.cpp
+  PropertiesWnd.cpp
+  ViewTree.cpp
+  コードを生成中...
+  app2.vcxproj -> C:\src\github\resource_reader\example\app\x64\Debug\app2.exe

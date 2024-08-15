@@ -1,0 +1,23 @@
+[
+  {
+    "Name": "\u65B0\u3057\u3044\u30D7\u30ED\u30D5\u30A1\u30A4\u30EB",
+    "Projects": [
+      {
+        "Name": "app\\app.vcxproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "app2\\app2.vcxproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "app3\\app3.vcxproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "app4\\app4.vcxproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
