@@ -36,6 +36,7 @@ async fn get_work_items() -> HttpResponse {
 }
 
 async fn post_operation_load_data() -> HttpResponse {
+    println!("post_operation_load_data");
     let app_config: AppConfig = get_app_config().await;
     let config: Config = get_config(&app_config);
 
