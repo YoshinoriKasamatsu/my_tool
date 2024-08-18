@@ -31,7 +31,6 @@ export function Get<T>(credentialInfo: CredentialInfo, url: string):  Observable
         return result;
     } catch (error) {
         console.error('Error fetching:', error);
-        console.log(url);
         return of(null);
     }
 }

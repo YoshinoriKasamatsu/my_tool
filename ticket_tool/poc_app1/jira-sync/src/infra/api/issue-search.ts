@@ -35,6 +35,9 @@ export type SearchReults = {
             }
         }
     }];
+    maxResults: number,
+    startAt: number,
+    total: number,
 }
 
 export const IssueSearch = {
@@ -47,8 +50,6 @@ export const IssueSearch = {
         expand: string[] = ['changelog']
     ) => {
         const url = `${credential.endPoint}${JIRA_API_ENDPOINT}/?jql=${jql}&startAt=${startAt}&maxResults=${maxResults}&fields=${fields.join(',')}&expand=${expand.join(',')}`;
-        // const url = `${credential.endPoint}${JIRA_API_ENDPOINT}/?jql=${jql}`;
-        console.log(url);
         const response = Get<SearchReults>(credential, url);
         return response;
     }
