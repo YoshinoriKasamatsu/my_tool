@@ -1,4 +1,4 @@
-import { ConnectSetting, type CredentialInfo } from "../connect-setting";
+import { type CredentialInfo } from "../connect-setting";
 import { Get } from "./http-common";
 
 const JIRA_API_ENDPOINT_FIELD = '/rest/api/3/field';

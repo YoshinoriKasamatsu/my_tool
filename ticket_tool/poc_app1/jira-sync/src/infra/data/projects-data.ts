@@ -1,6 +1,5 @@
 import { firstValueFrom } from "rxjs";
 import type { ConnectSetting } from "../connect-setting";
-import { Field } from "../api/issue-field";
 import * as fs from 'fs';
 import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
@@ -9,7 +8,6 @@ import { IssueSearch } from "../api/issue-search";
 
 export const ProjectsData = {
     SyncData: async (connectionSetting: ConnectSetting) => {
-        
         // isSyncがtrueのプロジェクトのみ処理を行う
         const syncProjects = connectionSetting.projectInfos.filter(p => p.isSync);
         for (const project of syncProjects) {

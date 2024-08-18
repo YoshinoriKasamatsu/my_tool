@@ -1,11 +1,6 @@
 import { ConnectSetting } from './infra/connect-setting';
-import { Field } from './infra/api/issue-field';
-import { IssueSearch } from './infra/api/issue-search';
 import { firstValueFrom } from 'rxjs';
 import { Projects } from './infra/api/projects';
-import { FIELDS_FILE_PATH, OUTPUT_DIR } from './infra/const-definitions';
-import * as fs from 'fs';
-import * as Path from 'path';
 import { FieldsData } from './infra/data/issue-field-data';
 import { ProjectsData } from './infra/data/projects-data';
 
