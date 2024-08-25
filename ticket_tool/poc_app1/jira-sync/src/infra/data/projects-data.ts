@@ -48,7 +48,7 @@ export const ProjectsData = {
                 }
                 
                 // JQLを作成
-                const jql = `project = ${project.projectKey} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY updated ASC`;
+                const jql = `${project.whereCondition} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY ${project.orderBy}`;
                 const result = await firstValueFrom(IssueSearch.Get(connectionSetting.credentialInfo, jql, startAt, maxResults, fields));
                 
                 if(result === null){

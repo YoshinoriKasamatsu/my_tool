@@ -4,7 +4,9 @@ import { Projects } from './infra/api/projects';
 import { FieldsData } from './infra/data/issue-field-data';
 import { ProjectsData } from './infra/data/projects-data';
 
-
+/*
+    デフォルトの設定ファイルを作成する
+*/
 function createDefaultConfig() {
     ConnectSetting.save(ConnectSetting.createDefault());
     console.log('Please set up your configuration file.');
@@ -15,14 +17,22 @@ async function syncTicket(connectionSetting: ConnectSetting) {
     ProjectsData.SyncData(connectionSetting); 
 }
 
+// 設定ファイルが存在しない場合は作成する
 if (!ConnectSetting.isExists()) {
     createDefaultConfig();
 }else {
     const connectionSetting = ConnectSetting.load();
+    // プロジェクト情報が存在しない場合は取得する
     if(connectionSetting.projectInfos.length === 0){
         const projects = await firstValueFrom(Projects.Get(connectionSetting.credentialInfo));
         if (projects !== null ) {
-            const projectInfos = projects.map(p => { return { projectKey: p.key, projectName: p.name, isSync: false } });
+            const projectInfos = projects.map(p => { return { 
+                projectKey: p.key, 
+                projectName: p.name, 
+                isSync: false,
+                whereCondition: `project = ${p.key}`,
+                orderBy: 'updated ASC'
+            } });
             connectionSetting.projectInfos = projectInfos;
             ConnectSetting.save(connectionSetting);
         }

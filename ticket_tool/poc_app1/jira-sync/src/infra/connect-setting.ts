@@ -11,6 +11,8 @@ export interface ProjectInfo {
     projectKey: string;
     projectName: string;
     isSync: boolean;
+    whereCondition: string;
+    orderBy: string;
 }
 
 export type ConnectSetting = {
