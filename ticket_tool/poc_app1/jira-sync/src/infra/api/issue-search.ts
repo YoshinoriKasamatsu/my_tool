@@ -7,6 +7,8 @@ export type SearchReults = {
     issues: [{
         key: string,
         id: string,
+        expand: string,
+        self: string,
         changelog: {
             histories: {
                 id: string,

@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
 import { IssueSearch } from "../api/issue-search";
+import * as duckdb from "duckdb";
 
 
 export const ProjectsData = {
@@ -19,6 +20,22 @@ export const ProjectsData = {
             if (!fs.existsSync(project_dir)) {
                 fs.mkdirSync(project_dir, { recursive: true });
             }
+
+            
+            // プロジェクトのDuckDbファイルが存在しない場合は作成する
+            const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
+            const db = new duckdb.Database(duckDbFilePath);
+            // テーブルが存在しない場合は作成する
+            const sql = "CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON);";
+            db.all(sql, function(err, res){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(res);
+                }
+            });
+
+
 
             // プロジェクトの同期情報を取得
             let projectSyncData = ProjectSyncData.loadProject(project);
@@ -60,6 +77,14 @@ export const ProjectsData = {
                     projectSyncData.lastupdatedIssueKeys.push(issue.key);
                     projectSyncData.lastUpdated = issueLastUpdated;
                     lastUpdated = projectSyncData.lastUpdated;
+
+                    // DuckDbにデータを登録
+                    const insertSQL = `INSERT INTO main.issues VALUES (${issue.id}, '${issue.key}', '${issue.expand}', '${issue.self}', '${JSON.stringify(issue.fields)}');`
+                    db.exec(insertSQL, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });                    
                 }
                 ProjectSyncData.saveProjectSyncData(projectSyncData);
                 total += result.issues.length;
@@ -69,6 +94,14 @@ export const ProjectsData = {
                     break;
                 }
             }
+            // const selectResutl = db.all("SELECT * FROM main.issues", function(err, res){
+            //     if(err){
+            //         console.log(err);
+            //     }else{
+            //         // console.log(res);
+            //     }
+            // });
+            db.close();
         }
     }
 }
