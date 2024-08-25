@@ -21,19 +21,12 @@ export const ProjectsData = {
             }
 
             // プロジェクトの同期情報を取得
-            let projectSyncData = ProjectSyncData.loadProject(project.projectKey);
+            let projectSyncData = ProjectSyncData.loadProject(project);
 
             // 更新日時を取得
-            let lastUpdated: Date = new Date(0);
-            if (projectSyncData === null) {
-                projectSyncData = ProjectSyncData.createDefault(project);
-            } else {
-                lastUpdated = projectSyncData.lastUpdated;
-            }
+            let lastUpdated: Date = projectSyncData.lastUpdated;;
 
             while(true){
-
-                
                 // yyyy-MM-ddTHH:MM形式の文字列に変更(先頭16文字取得)
                 const lastUpdatedStr = lastUpdated.toISOString().slice(0, 16).replace('T', ' ');
                 let lastUpdatedJST = new Date(lastUpdated.toISOString());

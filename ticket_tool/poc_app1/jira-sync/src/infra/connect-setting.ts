@@ -62,13 +62,16 @@ export const ProjectSyncData = {
         const syncData = ProjectSyncData.load();
         return syncData.some(p => p.projectKey === projectKey);
     },
-    loadProject(projectKey: string): ProjectSyncData | null {
+    loadProject(project: ProjectInfo): ProjectSyncData{
         if (!ProjectSyncData.isExists()) {
-            return null;
+            return ProjectSyncData.createDefault(project);
         }
         const syncData = ProjectSyncData.load();
-        const project = syncData.find(p => p.projectKey === projectKey);
-        return project ? project : null;
+        const matchedProject = syncData.find(p => p.projectKey === project.projectKey);
+        if (matchedProject === undefined || matchedProject === null) {
+            return ProjectSyncData.createDefault(project);
+        }
+        return matchedProject;
     },
     createDefault(project: ProjectInfo): ProjectSyncData {
         return {
