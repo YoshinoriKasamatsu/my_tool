@@ -5,6 +5,7 @@ import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
 import { IssueSearch } from "../api/issue-search";
 import * as duckdb from "duckdb";
+import { FieldsData } from "./issue-field-data";
 
 
 export const ProjectsData = {
@@ -26,14 +27,28 @@ export const ProjectsData = {
             const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
             const db = new duckdb.Database(duckDbFilePath);
             // テーブルが存在しない場合は作成する
-            const sql = "CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON);";
-            db.all(sql, function(err, res){
+            const crewateIssuesSql = "CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON);";
+            db.all(crewateIssuesSql, function(err, res){
                 if(err){
                     console.log(err);
-                }else{
-                    console.log(res);
                 }
             });
+
+            const fieldsValue = await FieldsData.ReadData();
+            for (const field of fieldsValue) {
+                if (field.id === 'parent'){
+                    continue;
+                }
+
+                // schemaプロパティが存在しない場合はスキップ
+                if (field.schema === undefined || field.schema === null) {
+                    continue;
+                }
+
+                console.log(`${field.schema.type}`)
+            }
+            
+            
 
 
 

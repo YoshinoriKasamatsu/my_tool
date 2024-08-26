@@ -5,6 +5,20 @@ import * as fs from 'fs';
 import { DATA_DIR, FIELDS_FILE_PATH, OUTPUT_DIR } from "../const-definitions";
 
 
+export type FieldData = {
+    id: string;
+    name: string;
+    custom: boolean;
+    orderable: boolean;
+    navigable: boolean;
+    searchable: boolean;
+    clauseNames: string[];
+    schema: {
+        type: string;
+        system: string;
+    }
+}
+
 export const FieldsData = {
     SyncData: async (connectionSetting: ConnectSetting) => {
         const feild = await firstValueFrom(Field.Get(connectionSetting.credentialInfo));
@@ -26,5 +40,16 @@ export const FieldsData = {
                 fs.writeFileSync(FIELDS_FILE_PATH, fieldsJson, 'utf8');
             }
         }
+    },
+
+    ReadData: async (): Promise<FieldData[]> => {
+        // フィールドデータファイルが存在しない場合は処理を終了
+        if (!fs.existsSync(FIELDS_FILE_PATH)) {
+            console.log('Fields data file does not exist.');
+            return [];
+        }
+        const fields = fs.readFileSync(FIELDS_FILE_PATH, 'utf8');
+        
+        return JSON.parse(fields);
     }
 }
