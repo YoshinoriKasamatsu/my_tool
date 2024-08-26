@@ -77,9 +77,10 @@ export const ProjectsData = {
                     projectSyncData.lastupdatedIssueKeys.push(issue.key);
                     projectSyncData.lastUpdated = issueLastUpdated;
                     lastUpdated = projectSyncData.lastUpdated;
+                    const fieldsJson = JSON.stringify(issue.fields).replace(/'/g, "''");
 
                     // DuckDbにデータを登録
-                    const insertSQL = `INSERT INTO main.issues VALUES (${issue.id}, '${issue.key}', '${issue.expand}', '${issue.self}', '${JSON.stringify(issue.fields)}');`
+                    const insertSQL = `INSERT INTO main.issues VALUES (${issue.id}, '${issue.key}', '${issue.expand}', '${issue.self}', '${fieldsJson}');`
                     db.exec(insertSQL, (err) => {
                         if (err) {
                             console.log(err);
