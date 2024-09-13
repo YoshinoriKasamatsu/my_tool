@@ -13,11 +13,15 @@ function createDefaultConfig() {
 }
 
 async function syncTicket(connectionSetting: ConnectSetting) {
-    SchemaData.SyncData(connectionSetting);
+    await SchemaData.SyncData(connectionSetting);
+    console.log('Schema data has been updated.');   
 
+    await ProjectsData.Initialize(connectionSetting);
+    console.log('Project data has been updated.');
 
-
-    ProjectsData.SyncData(connectionSetting); 
+    
+    await ProjectsData.SyncData(connectionSetting); 
+    console.log('Ticket data has been updated.');
 }
 
 // 設定ファイルが存在しない場合は作成する

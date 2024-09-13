@@ -23,23 +23,40 @@ export type SearchReults = {
                 }[]
         }[]},
         fields: {
-            summary: string,
-            status: {
-                name: string,
-                statusCategory: {
-                    key: string,
-                    name: string
-                }
-            },
-            updated: string,
-            assignee: {
-                name: string
-            }
-        }
+        },
+        // fields: {
+        //     summary: string,
+        //     status: {
+        //         name: string,
+        //         statusCategory: {
+        //             key: string,
+        //             name: string
+        //         }
+        //     },
+        //     updated: string,
+        //     assignee: {
+        //         name: string
+        //     }
+        // }
     }];
     maxResults: number,
     startAt: number,
     total: number,
+}
+
+export type Fields = {
+    summary: string,
+    status: {
+        name: string,
+        statusCategory: {
+            key: string,
+            name: string
+        }
+    },
+    updated: string,
+    assignee: {
+        name: string
+    }
 }
 
 export const IssueSearch = {
