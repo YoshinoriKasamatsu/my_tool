@@ -1,8 +1,8 @@
 import { firstValueFrom } from "rxjs";
-import type { ConnectSetting } from "../connect-setting";
-import { Field } from "../api/issue-field";
+import type { ConnectSetting, CredentialInfo } from "../connect-setting";
+import { Field, IssueType, Priority, Project, Status, User } from "../api/issue-schema";
 import * as fs from 'fs';
-import { DATA_DIR, FIELDS_FILE_PATH, OUTPUT_DIR } from "../const-definitions";
+import { DATA_DIR, FIELDS_FILE_PATH, ISSUE_TYPE_FILE_PATH, OUTPUT_DIR, PRIORITY_FILE_PATH, PROJECT_FILE_PATH, STATUS_FILE_PATH, USER_FILE_PATH } from "../const-definitions";
 
 
 export type FieldData = {
@@ -19,27 +19,40 @@ export type FieldData = {
     }
 }
 
-export const FieldsData = {
+export const SchemaData = {
     SyncData: async (connectionSetting: ConnectSetting) => {
-        const feild = await firstValueFrom(Field.Get(connectionSetting.credentialInfo));
-        // フィールドデータをjson形式で保存する
-        const fieldsJson = JSON.stringify(feild);
-        // フィールドデータファイルの有無を確認
-        if (!fs.existsSync(FIELDS_FILE_PATH)) {
-            if (!fs.existsSync(DATA_DIR)) {
-                console.log('Create output directory.');
-                fs.mkdirSync(DATA_DIR, { recursive: true });
-            }
-            // フィールドデータファイルが存在しない場合は作成
-            fs.writeFileSync(FIELDS_FILE_PATH, fieldsJson, 'utf8');
-        }else{
-            const beforeFields = fs.readFileSync(FIELDS_FILE_PATH, 'utf8');
-            // フィールドデータが変更されているか確認
-            if(fieldsJson !== beforeFields){
-                console.log('Fields data has been updated.');
-                fs.writeFileSync(FIELDS_FILE_PATH, fieldsJson, 'utf8');
+
+        if (!fs.existsSync(DATA_DIR)) {
+            console.log('Create output directory.');
+            fs.mkdirSync(DATA_DIR, { recursive: true });
+        }
+        const getShcemaData = async (func: Function, filePath: string) => {
+            // issuetype
+            const schemaData = await firstValueFrom(func(connectionSetting.credentialInfo));
+            // フィールドデータをjson形式で保存する
+            const schemaJson = JSON.stringify(schemaData, null, 2);
+            if (!fs.existsSync(filePath)) {
+                fs.writeFileSync(filePath, schemaJson, 'utf8');
+            }else{
+                const beforeJson = fs.readFileSync(filePath, 'utf8');
+                // フィールドデータが変更されているか確認
+                if(schemaJson !== beforeJson){
+                    console.log('Schema data has been updated.');
+                    fs.writeFileSync(filePath, schemaJson, 'utf8');
+                }
             }
         }
+        getShcemaData(Field.Get, FIELDS_FILE_PATH);
+        // issuetype
+        getShcemaData(IssueType.Get, ISSUE_TYPE_FILE_PATH);
+        // priority
+        getShcemaData(Priority.Get, PRIORITY_FILE_PATH);
+        // project
+        getShcemaData(Project.Get, PROJECT_FILE_PATH);
+        // status
+        getShcemaData(Status.Get, STATUS_FILE_PATH);
+        // user
+        getShcemaData(User.Get, USER_FILE_PATH);
     },
 
     ReadData: async (): Promise<FieldData[]> => {

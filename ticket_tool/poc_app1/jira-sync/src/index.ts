@@ -1,7 +1,7 @@
 import { ConnectSetting } from './infra/connect-setting';
 import { firstValueFrom } from 'rxjs';
 import { Projects } from './infra/api/projects';
-import { FieldsData } from './infra/data/issue-field-data';
+import { SchemaData } from './infra/data/issue-field-data';
 import { ProjectsData } from './infra/data/projects-data';
 
 /*
@@ -13,7 +13,10 @@ function createDefaultConfig() {
 }
 
 async function syncTicket(connectionSetting: ConnectSetting) {
-    FieldsData.SyncData(connectionSetting);
+    SchemaData.SyncData(connectionSetting);
+
+
+
     ProjectsData.SyncData(connectionSetting); 
 }
 

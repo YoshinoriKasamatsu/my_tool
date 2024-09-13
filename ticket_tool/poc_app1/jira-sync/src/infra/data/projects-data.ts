@@ -5,11 +5,30 @@ import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
 import { IssueSearch } from "../api/issue-search";
 import * as duckdb from "duckdb";
-import { FieldsData } from "./issue-field-data";
+import { SchemaData } from "./issue-field-data";
 
 
 export const ProjectsData = {
     SyncData: async (connectionSetting: ConnectSetting) => {
+
+        
+        SchemaData.ReadData().then(fields => {
+            fields.forEach(field => {
+                switch (field.schema?.type) {
+                    case 'string':
+                    case 'number':
+                    case 'date':
+                    case 'array':
+                    case 'datetime':
+                    case 'any':
+
+
+                }
+                // console.log(`${field.id}\t${field.name}\t${field.schema?.type}`);
+                // console.log(`${field.id}\t${field.schema?.type}`);
+            });
+        });
+
         // isSyncがtrueのプロジェクトのみ処理を行う
         const syncProjects = connectionSetting.projectInfos.filter(p => p.isSync);
         const fields = ['*all'];
@@ -34,7 +53,7 @@ export const ProjectsData = {
                 }
             });
 
-            const fieldsValue = await FieldsData.ReadData();
+            const fieldsValue = await SchemaData.ReadData();
             for (const field of fieldsValue) {
                 if (field.id === 'parent'){
                     continue;
