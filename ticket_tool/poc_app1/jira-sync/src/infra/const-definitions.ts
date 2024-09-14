@@ -12,6 +12,8 @@ export const SYNC_FILE_PATH = `${OUTPUT_DIR}/${SYNC_DATA_FILE_NAME}`;
 
 export const DATA_DIR = Path.join(OUTPUT_DIR, 'data');
 
+export const LOG_DIR = Path.join(OUTPUT_DIR, 'log');
+
 export const FIELDS_FILE_PATH = Path.join(DATA_DIR, 'fields.json');
 export const ISSUE_TYPE_FILE_PATH = Path.join(DATA_DIR, 'issuetypes.json');
 export const PRIORITY_FILE_PATH = Path.join(DATA_DIR, 'priorities.json');

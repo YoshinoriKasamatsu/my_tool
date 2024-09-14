@@ -3,6 +3,7 @@ import { firstValueFrom } from 'rxjs';
 import { Projects } from './infra/api/projects';
 import { SchemaData } from './infra/data/issue-field-data';
 import { ProjectsData } from './infra/data/projects-data';
+import { Logger } from './infra/log/logger';
 
 /*
     デフォルトの設定ファイルを作成する
@@ -13,15 +14,16 @@ function createDefaultConfig() {
 }
 
 async function syncTicket(connectionSetting: ConnectSetting) {
+    const logger = Logger.getInstance();
     await SchemaData.SyncData(connectionSetting);
-    console.log('Schema data has been updated.');   
+    logger.info('Schema data has been updated.');   
 
     await ProjectsData.Initialize(connectionSetting);
-    console.log('Project data has been updated.');
+    logger.info('Project data has been updated.');
 
-    
+
     await ProjectsData.SyncData(connectionSetting); 
-    console.log('Ticket data has been updated.');
+    logger.info('Ticket data has been updated.');
 }
 
 // 設定ファイルが存在しない場合は作成する

@@ -6,6 +6,7 @@ import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
 import { IssueSearch, type Fields } from "../api/issue-search";
 import * as duckdb from "duckdb";
 import { SchemaData } from "./issue-field-data";
+import { Logger } from "../log/logger";
 
 
 export const ProjectsData = {
@@ -23,12 +24,7 @@ export const ProjectsData = {
             if (!fs.existsSync(project_dir)) {
                 fs.mkdirSync(project_dir, { recursive: true });
             }
-            
-            // プロジェクトのDuckDbファイルが存在しない場合は作成する
-            const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
-            if (fs.existsSync(duckDbFilePath)) {
-                continue;
-            }
+
             let fieldsDefinitons: string[] = [];
             const fieldsValue = await SchemaData.ReadData();
             
@@ -57,9 +53,10 @@ export const ProjectsData = {
                         break;
                 }
             });
-            const fieldsDefinitonsStr = fieldsDefinitons.join(', ');
+            const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
             const db = new duckdb.Database(duckDbFilePath);
-            // テーブルが存在しない場合は作成する
+
+            const fieldsDefinitonsStr = fieldsDefinitons.join(', ');
             const crewateIssuesSql = `CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON, ${fieldsDefinitonsStr});`;
             await db.all(crewateIssuesSql, function(err, res){
                 if(err){
@@ -73,7 +70,8 @@ export const ProjectsData = {
     
     // プロジェクト情報を同期する
     SyncData: async (connectionSetting: ConnectSetting) => {
-        console.log('Project data has been updated.');
+        const logger = Logger.getInstance();
+        logger.info('Project data has been updated.');
         // isSyncがtrueのプロジェクトのみ処理を行う
         const syncProjects = connectionSetting.projectInfos.filter(p => p.isSync);
         const fields = ['*all'];
@@ -81,7 +79,7 @@ export const ProjectsData = {
         const maxResults = 100;
         let total = 0;
         for (const project of syncProjects) {
-            console.log(`Project: ${project.projectKey} ${project.projectName} Data Sync Start.`);
+            logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync Start.`);
             const project_dir = Path.join(DATA_DIR, project.projectKey);
             if (!fs.existsSync(project_dir)) {
                 fs.mkdirSync(project_dir, { recursive: true });
@@ -89,6 +87,7 @@ export const ProjectsData = {
             // プロジェクトのDuckDbファイルが存在しない場合は作成する
             const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
             const db = new duckdb.Database(duckDbFilePath);
+            db.connect();
 
             const fieldsValue = await SchemaData.ReadData();
             // プロジェクトの同期情報を取得
@@ -119,7 +118,7 @@ export const ProjectsData = {
                     break
                 }
                 for (const issue of result.issues) {
-                    // console.log(issue);    
+                    logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync. Issue: ${issue.key} start.`);
                     const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
                     const issueFields = fieldObjects as Fields;
                     // console.log(`${issue.key} ${issueFields.summary} ${issueFields.updated}`);
@@ -180,12 +179,16 @@ export const ProjectsData = {
 
                     // DuckDbにデータを登録
                     const insertSQL = `INSERT INTO main.issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`
+                    logger.info(insertSQL);
                     await db.exec(insertSQL, (err) => {
+                        console.log(insertSQL);
+                        console.log(err);
                         if (err) {
                             console.log(insertSQL);
                             console.log(err);
                         }
-                    });                    
+                    });
+                    logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync. Issue: ${issue.key} end.`);
                 }
                 console.log(`Project: ${project.projectKey} ${project.projectName} Data Sync. Total: ${total}`);
                 ProjectSyncData.saveProjectSyncData(projectSyncData);
