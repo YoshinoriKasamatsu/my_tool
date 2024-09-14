@@ -1,5 +1,5 @@
 import { firstValueFrom } from "rxjs";
-import { ProjectSyncData, type ConnectSetting } from "../connect-setting";
+import { ProjectSyncData, type ConnectSetting, type ProjectInfo } from "../connect-setting";
 import * as fs from 'fs';
 import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
@@ -75,9 +75,7 @@ export const ProjectsData = {
         // isSyncがtrueのプロジェクトのみ処理を行う
         const syncProjects = connectionSetting.projectInfos.filter(p => p.isSync);
         const fields = ['*all'];
-        const startAt = 0;
-        const maxResults = 100;
-        let total = 0;
+
         for (const project of syncProjects) {
             logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync Start.`);
             const project_dir = Path.join(DATA_DIR, project.projectKey);
@@ -85,121 +83,127 @@ export const ProjectsData = {
                 fs.mkdirSync(project_dir, { recursive: true });
             }
             // プロジェクトのDuckDbファイルが存在しない場合は作成する
-            const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
-            const db = new duckdb.Database(duckDbFilePath);
-            db.connect();
-
-            const fieldsValue = await SchemaData.ReadData();
-            // プロジェクトの同期情報を取得
-            let projectSyncData = ProjectSyncData.loadProject(project);
-
-            // 更新日時を取得
-            let lastUpdated: Date = projectSyncData.lastUpdated;;
-
-            while(true){
-                // yyyy-MM-ddTHH:MM形式の文字列に変更(先頭16文字取得)
-                const lastUpdatedStr = lastUpdated.toISOString().slice(0, 16).replace('T', ' ');
-                let lastUpdatedJST = new Date(lastUpdated.toISOString());
-                // JSTの日時の文字列を取得するために9時間足す
-                lastUpdatedJST.setHours(lastUpdatedJST.getHours() + 9);
-                const lastUpdatedStrJST = lastUpdatedJST.toISOString().slice(0, 16).replace('T', ' ');
-
-                // 除外するIssueKeyを取得
-                let excludeIssueKeys = '';
-                if (projectSyncData.lastupdatedIssueKeys.length > 0) {
-                    excludeIssueKeys = ` AND key NOT IN ('${projectSyncData.lastupdatedIssueKeys.join("','")}')`;
-                }
-                
-                // JQLを作成
-                const jql = `${project.whereCondition} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY ${project.orderBy}`;
-                const result = await firstValueFrom(IssueSearch.Get(connectionSetting.credentialInfo, jql, startAt, maxResults, fields));
-                
-                if(result === null){
-                    break
-                }
-                for (const issue of result.issues) {
-                    logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync. Issue: ${issue.key} start.`);
-                    const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
-                    const issueFields = fieldObjects as Fields;
-                    // console.log(`${issue.key} ${issueFields.summary} ${issueFields.updated}`);
-                    const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
-                    fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
-                    let issueLastUpdatedStr = new Date(issueFields.updated);
-                    // 更新日時を文字列からDate型に変換
-                    let issueLastUpdated = new Date(issueLastUpdatedStr);
-                    if (lastUpdatedStr !== issueLastUpdated.toISOString().slice(0, 16).replace('T', ' ')){
-                        projectSyncData.lastupdatedIssueKeys = [];
-                    }
-                    projectSyncData.lastupdatedIssueKeys.push(issue.key);
-                    projectSyncData.lastUpdated = issueLastUpdated;
-                    lastUpdated = projectSyncData.lastUpdated;
-
-
-                    let fieldNames = ['id', 'key', 'expand', 'self'];
-                    let fieldValues = [issue.id, `'${issue.key}'`, `${issue.expand}`, `${issue.self}`];
-
-                    
-                    for(const field of fieldsValue) {
-                        let fieldName: string = '';
-                        let fieldValue: string = '';
-                        switch (field.schema?.type) {
-                            case 'number':
-                            case 'string':
-                                fieldName = `${field.id}`;
-                                fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
-                                break;
-                            case 'date':
-                            case 'datetime':
-                                fieldName = `${field.id}`;
-                                fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
-                                break;
-                            case 'project':
-                            case 'issuetype':
-                            case 'priority':
-                            case 'status':
-                                // fieldName = `${field.id}_id`;
-                                // fieldValue = fieldObjects[field.id];
-                                break;
-                            case 'user':
-                                // fieldName = `${field.id}_accountId`;
-                                // fieldValue = fieldObjects[field.id];
-                                break;
-                            case 'array':
-                            case 'any':
-                                // fieldNames.push(`${field.name}`);
-                                // fieldValues.push(`'${fieldObjects[field.id]}'`);
-                                break;
-                        }
-                        if(fieldName !== ''){
-                            fieldNames.push(fieldName);
-                            fieldValues.push(fieldValue);
-                        }
-
-                    }
-
-                    // DuckDbにデータを登録
-                    const insertSQL = `INSERT INTO main.issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`
-                    logger.info(insertSQL);
-                    await db.exec(insertSQL, (err) => {
-                        console.log(insertSQL);
-                        console.log(err);
-                        if (err) {
-                            console.log(insertSQL);
-                            console.log(err);
-                        }
-                    });
-                    logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync. Issue: ${issue.key} end.`);
-                }
-                console.log(`Project: ${project.projectKey} ${project.projectName} Data Sync. Total: ${total}`);
-                ProjectSyncData.saveProjectSyncData(projectSyncData);
-                total += result.issues.length;
-                if (result.total === 0 || result.total === result.maxResults) {
-                    // データ同期完了のメッセージ。取得できた件数を表示する。
-                    console.log(`Project: ${project.projectKey} ${project.projectName} Data Sync Completed. Total: ${total}`);
-                    break;
-                }
-            }
-            await db.close();
+            await syncProject(project_dir, project, connectionSetting, fields, logger);
         }
     }
+}
+
+async function syncProject(project_dir: string, project: ProjectInfo, connectionSetting: ConnectSetting, fields: string[], logger: Logger) {
+    const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
+    const db = new duckdb.Database(duckDbFilePath);
+    const connect = db.connect();
+
+    const fieldsValue = await SchemaData.ReadData();
+    // プロジェクトの同期情報を取得
+    let projectSyncData = ProjectSyncData.loadProject(project);
+
+    // 更新日時を取得
+    let lastUpdated: Date = projectSyncData.lastUpdated;;
+
+    const startAt = 0;
+    const maxResults = 100;
+    let total = 0;
+
+    while (true) {
+        // yyyy-MM-ddTHH:MM形式の文字列に変更(先頭16文字取得)
+        const lastUpdatedStr = lastUpdated.toISOString().slice(0, 16).replace('T', ' ');
+        let lastUpdatedJST = new Date(lastUpdated.toISOString());
+        // JSTの日時の文字列を取得するために9時間足す
+        lastUpdatedJST.setHours(lastUpdatedJST.getHours() + 9);
+        const lastUpdatedStrJST = lastUpdatedJST.toISOString().slice(0, 16).replace('T', ' ');
+
+        // 除外するIssueKeyを取得
+        let excludeIssueKeys = '';
+        if (projectSyncData.lastupdatedIssueKeys.length > 0) {
+            excludeIssueKeys = ` AND key NOT IN ('${projectSyncData.lastupdatedIssueKeys.join("','")}')`;
+        }
+
+        // JQLを作成
+        const jql = `${project.whereCondition} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY ${project.orderBy}`;
+
+        const result = await firstValueFrom(IssueSearch.Get(connectionSetting.credentialInfo, jql, startAt, maxResults, fields));
+
+        if (result === null) {
+            break;
+        }
+
+        for (const issue of result.issues) {
+            const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
+            const issueFields = fieldObjects as Fields;
+            // console.log(`${issue.key} ${issueFields.summary} ${issueFields.updated}`);
+            const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
+            fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
+            let issueLastUpdatedStr = new Date(issueFields.updated);
+            // 更新日時を文字列からDate型に変換
+            let issueLastUpdated = new Date(issueLastUpdatedStr);
+            if (lastUpdatedStr !== issueLastUpdated.toISOString().slice(0, 16).replace('T', ' ')) {
+                projectSyncData.lastupdatedIssueKeys = [];
+            }
+            projectSyncData.lastupdatedIssueKeys.push(issue.key);
+            projectSyncData.lastUpdated = issueLastUpdated;
+            lastUpdated = projectSyncData.lastUpdated;
+
+
+            let fieldNames = ['id', 'key', 'expand', 'self'];
+            let fieldValues = [issue.id, `'${issue.key}'`, `'${issue.expand}'`, `'${issue.self}'`];
+
+
+            for (const field of fieldsValue) {
+                let fieldName: string = '';
+                let fieldValue: string = '';
+                switch (field.schema?.type) {
+                    case 'number':
+                    case 'string':
+                        fieldName = `${field.id}`;
+                        fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+                        break;
+                    case 'date':
+                    case 'datetime':
+                        fieldName = `${field.id}`;
+                        fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+                        break;
+                    case 'project':
+                    case 'issuetype':
+                    case 'priority':
+                    case 'status':
+                        // fieldName = `${field.id}_id`;
+                        // fieldValue = fieldObjects[field.id];
+                        break;
+                    case 'user':
+                        // fieldName = `${field.id}_accountId`;
+                        // fieldValue = fieldObjects[field.id];
+                        break;
+                    case 'array':
+                    case 'any':
+                        // fieldNames.push(`${field.name}`);
+                        // fieldValues.push(`'${fieldObjects[field.id]}'`);
+                        break;
+                }
+                if (fieldName !== '') {
+                    fieldNames.push(fieldName);
+                    fieldValues.push(fieldValue);
+                }
+
+            }
+
+            // DuckDbにデータを登録
+            const insertSQL = `INSERT INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
+            await connect.run(insertSQL);
+        }
+        ProjectSyncData.saveProjectSyncData(projectSyncData);
+        total += result.issues.length;
+        if (result.total === 0 || result.total === result.maxResults) {
+            // データ同期完了のメッセージ。取得できた件数を表示する。
+            logger.info(`Project: ${project.projectKey} ${project.projectName} Data Sync Completed. Total: ${total}`);
+            break;
+        }else{
+            logger.info(`next`);
+        }
+    }
+
+
+    const rows = await connect.all('SELECT * FROM issues');
+    console.log(rows);
+    await connect.close();
+    await db.close();
 }
