@@ -55,16 +55,25 @@ export const ProjectsData = {
             });
             const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
             const db = new duckdb.Database(duckDbFilePath);
+            const connect = db.connect();
+            try{
+                const fieldsDefinitonsStr = fieldsDefinitons.join(', ');
+                const crewateIssuesSql = `CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON, ${fieldsDefinitonsStr});`;
+                await connect.exec(crewateIssuesSql, function(err, res){
+                    if(err){
+                        console.log(err);
+                    }
+                });
 
-            const fieldsDefinitonsStr = fieldsDefinitons.join(', ');
-            const crewateIssuesSql = `CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON, ${fieldsDefinitonsStr});`;
-            await db.all(crewateIssuesSql, function(err, res){
-                if(err){
-                    console.log(err);
-                }
-            });
-            await db.close();
+            }catch(e){
+                console.error(e);
+            }finally{
+                connect.close();
+                db.close();
 
+                // 1秒待機
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
         }
     },
     
@@ -105,8 +114,6 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
     let total = 0;
 
     while (true) {
-        // yyyy-MM-ddTHH:MM形式の文字列に変更(先頭16文字取得)
-        const lastUpdatedStr = lastUpdated.toISOString().slice(0, 16).replace('T', ' ');
         let lastUpdatedJST = new Date(lastUpdated.toISOString());
         // JSTの日時の文字列を取得するために9時間足す
         lastUpdatedJST.setHours(lastUpdatedJST.getHours() + 9);
@@ -128,11 +135,16 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         }
 
         for (const issue of result.issues) {
+            // yyyy-MM-ddTHH:MM形式の文字列に変更(先頭16文字取得)
+            const lastUpdatedStr = lastUpdated.toISOString().slice(0, 16).replace('T', ' ');
+
             const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
             const issueFields = fieldObjects as Fields;
             // console.log(`${issue.key} ${issueFields.summary} ${issueFields.updated}`);
             const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
             fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
+
+            // 更新日時(yyyy-MM-ddを取得
             let issueLastUpdatedStr = new Date(issueFields.updated);
             // 更新日時を文字列からDate型に変換
             let issueLastUpdated = new Date(issueLastUpdatedStr);
@@ -141,7 +153,6 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
             }
             projectSyncData.lastupdatedIssueKeys.push(issue.key);
             projectSyncData.lastUpdated = issueLastUpdated;
-            lastUpdated = projectSyncData.lastUpdated;
 
 
             let fieldNames = ['id', 'key', 'expand', 'self'];
@@ -188,7 +199,14 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 
             // DuckDbにデータを登録
             const insertSQL = `INSERT INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
-            await connect.run(insertSQL);
+            connect.exec(insertSQL, function (err, res) {
+                if (err) {
+                    console.log(err);
+                }
+
+            });
+            lastUpdated = projectSyncData.lastUpdated;
+            console.log(`${lastUpdated} ${issue.key} ${projectSyncData.lastupdatedIssueKeys.join(',')}`);
         }
         ProjectSyncData.saveProjectSyncData(projectSyncData);
         total += result.issues.length;
@@ -201,9 +219,15 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         }
     }
 
-
-    const rows = await connect.all('SELECT * FROM issues');
+    const rows = await connect.all('SELECT * FROM issues;');    
     console.log(rows);
-    await connect.close();
-    await db.close();
+    try {
+        await connect.close();
+        await db.close();
+    }catch(e){
+        console.error(e);
+        logger.error('error');
+    }
+
+
 }
