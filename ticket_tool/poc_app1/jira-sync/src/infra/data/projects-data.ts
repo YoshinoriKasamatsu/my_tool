@@ -114,19 +114,8 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
     let total = 0;
 
     while (true) {
-        let lastUpdatedJST = new Date(lastUpdated.toISOString());
-        // JSTの日時の文字列を取得するために9時間足す
-        lastUpdatedJST.setHours(lastUpdatedJST.getHours() + 9);
-        const lastUpdatedStrJST = lastUpdatedJST.toISOString().slice(0, 16).replace('T', ' ');
-
-        // 除外するIssueKeyを取得
-        let excludeIssueKeys = '';
-        if (projectSyncData.lastupdatedIssueKeys.length > 0) {
-            excludeIssueKeys = ` AND key NOT IN ('${projectSyncData.lastupdatedIssueKeys.join("','")}')`;
-        }
-
-        // JQLを作成
-        const jql = `${project.whereCondition} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY ${project.orderBy}`;
+        const jql = createJql(lastUpdated, projectSyncData, project);
+        logger.info(`JQL: ${jql}`);
         const requestBody: SearchRequest = {
             jql: jql,
             startAt: startAt,
@@ -204,7 +193,7 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
             }
 
             // DuckDbにデータを登録
-            const insertSQL = `INSERT INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
+            const insertSQL = `INSERT OR REPLACE INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
             connect.exec(insertSQL, function (err, res) {
                 if (err) {
                     console.log(err);
@@ -246,3 +235,20 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 
 
 }
+function createJql(lastUpdated: Date, projectSyncData: ProjectSyncData, project: ProjectInfo) {
+    let lastUpdatedJST = new Date(lastUpdated.toISOString());
+    // JSTの日時の文字列を取得するために9時間足す
+    lastUpdatedJST.setHours(lastUpdatedJST.getHours() + 9);
+    const lastUpdatedStrJST = lastUpdatedJST.toISOString().slice(0, 16).replace('T', ' ');
+
+    // 除外するIssueKeyを取得
+    let excludeIssueKeys = '';
+    if (projectSyncData.lastupdatedIssueKeys.length > 0) {
+        excludeIssueKeys = ` AND key NOT IN ('${projectSyncData.lastupdatedIssueKeys.join("','")}')`;
+    }
+
+    // JQLを作成
+    const jql = `${project.whereCondition} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY ${project.orderBy}`;
+    return jql;
+}
+
