@@ -16,12 +16,7 @@ function createDefaultConfig() {
 async function syncTicket(connectionSetting: ConnectSetting) {
     const logger = Logger.getInstance();
     await SchemaData.SyncData(connectionSetting);
-    logger.info('Sync schema data has been completed.');
-
-
     await ProjectsData.Initialize(connectionSetting);
-    logger.info('Project data has been initialized.');
-
     await ProjectsData.SyncData(connectionSetting); 
     logger.info('Sync project data has been completed.');
 }

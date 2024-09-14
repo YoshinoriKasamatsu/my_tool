@@ -80,7 +80,6 @@ export const ProjectsData = {
     // プロジェクト情報を同期する
     SyncData: async (connectionSetting: ConnectSetting) => {
         const logger = Logger.getInstance();
-        logger.info('Project data has been updated.');
         // isSyncがtrueのプロジェクトのみ処理を行う
         const syncProjects = connectionSetting.projectInfos.filter(p => p.isSync);
         const fields = ['*all'];
@@ -115,7 +114,6 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 
     while (true) {
         const jql = createJql(lastUpdated, projectSyncData, project);
-        logger.info(`JQL: ${jql}`);
         const requestBody: SearchRequest = {
             jql: jql,
             startAt: startAt,
@@ -132,10 +130,8 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         for (const issue of result.issues) {
 
             // ファイルへ書き出し
-            {
-                const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
-                fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
-            }
+            const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
+            fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
             
             const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
             
@@ -165,19 +161,7 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
             logger.info(`next`);
         }
     }
-
-    
-
-    connect.all('SELECT id, key, summary, updated FROM issues;', function(err, res){
-        if(err){
-            console.log(err);
-        }
-
-        for(const row of res){
-            console.log(row.id, row.key, row.summary, row.updated);
-        }
-    })
-
+    // showAllData(connect);
     try {
         await connect.close();
         await db.close();
@@ -186,6 +170,18 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         logger.error('error');
     }
 }
+function showAllData(connect: duckdb.Connection) {
+    connect.all('SELECT id, key, summary, updated FROM issues;', function (err, res) {
+        if (err) {
+            console.log(err);
+        }
+
+        for (const row of res) {
+            console.log(row.id, row.key, row.summary, row.updated);
+        }
+    });
+}
+
 function createInsertSQL(issue: Issue, fieldsValue: FieldData[], fieldObjects: any) {
     let fieldNames = ['id', 'key', 'expand', 'self'];
     let fieldValues = [issue.id, `'${issue.key}'`, `'${issue.expand}'`, `'${issue.self}'`];

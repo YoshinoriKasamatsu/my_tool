@@ -31,7 +31,6 @@ export const SchemaData = {
             const schemaData = await firstValueFrom(func(connectionSetting.credentialInfo));
             // フィールドデータをjson形式で保存する
             const schemaJson = JSON.stringify(schemaData, null, 2);
-            console.log('Schema data has been updated.');
             if (!fs.existsSync(filePath)) {
                 fs.writeFileSync(filePath, schemaJson, 'utf8');
             }else{
@@ -43,7 +42,7 @@ export const SchemaData = {
                 }
             }
         }
-        console.log('Schema data has been updated.');
+        // field
         await getShcemaData(Field.Get, FIELDS_FILE_PATH);
         // issuetype
         await getShcemaData(IssueType.Get, ISSUE_TYPE_FILE_PATH);
