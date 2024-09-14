@@ -189,49 +189,51 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 function createInsertSQL(issue: Issue, fieldsValue: FieldData[], fieldObjects: any) {
     let fieldNames = ['id', 'key', 'expand', 'self'];
     let fieldValues = [issue.id, `'${issue.key}'`, `'${issue.expand}'`, `'${issue.self}'`];
-
-
     for (const field of fieldsValue) {
-        let fieldName: string = '';
-        let fieldValue: string = '';
-        switch (field.schema?.type) {
-            case 'number':
-            case 'string':
-                fieldName = `${field.id}`;
-                fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
-                break;
-            case 'date':
-            case 'datetime':
-                fieldName = `${field.id}`;
-                fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
-                break;
-            case 'project':
-            case 'issuetype':
-            case 'priority':
-            case 'status':
-                // fieldName = `${field.id}_id`;
-                // fieldValue = fieldObjects[field.id];
-                break;
-            case 'user':
-                // fieldName = `${field.id}_accountId`;
-                // fieldValue = fieldObjects[field.id];
-                break;
-            case 'array':
-            case 'any':
-                // fieldNames.push(`${field.name}`);
-                // fieldValues.push(`'${fieldObjects[field.id]}'`);
-                break;
-        }
+        let { fieldName, fieldValue }: { fieldName: string; fieldValue: string; } = createFieldNameAndValue(field, fieldObjects);
         if (fieldName !== '') {
             fieldNames.push(fieldName);
             fieldValues.push(fieldValue);
         }
-
     }
 
     // DuckDbにデータを登録
     const insertSQL = `INSERT OR REPLACE INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
     return insertSQL;
+}
+
+function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
+    let fieldName: string = '';
+    let fieldValue: string = '';
+    switch (field.schema?.type) {
+        case 'number':
+        case 'string':
+            fieldName = `${field.id}`;
+            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+            break;
+        case 'date':
+        case 'datetime':
+            fieldName = `${field.id}`;
+            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+            break;
+        case 'project':
+        case 'issuetype':
+        case 'priority':
+        case 'status':
+            // fieldName = `${field.id}_id`;
+            // fieldValue = fieldObjects[field.id];
+            break;
+        case 'user':
+            // fieldName = `${field.id}_accountId`;
+            // fieldValue = fieldObjects[field.id];
+            break;
+        case 'array':
+        case 'any':
+            // fieldNames.push(`${field.name}`);
+            // fieldValues.push(`'${fieldObjects[field.id]}'`);
+            break;
+    }
+    return { fieldName, fieldValue };
 }
 
 function createJql(lastUpdated: Date, projectSyncData: ProjectSyncData, project: ProjectInfo) {
