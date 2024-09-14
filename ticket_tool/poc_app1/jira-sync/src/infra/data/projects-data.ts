@@ -3,7 +3,7 @@ import { ProjectSyncData, type ConnectSetting, type ProjectInfo } from "../conne
 import * as fs from 'fs';
 import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
-import { IssueSearch, type Fields } from "../api/issue-search";
+import { IssueSearch, type Fields, type SearchRequest } from "../api/issue-search";
 import * as duckdb from "duckdb";
 import { SchemaData } from "./issue-field-data";
 import { Logger } from "../log/logger";
@@ -127,8 +127,15 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 
         // JQLを作成
         const jql = `${project.whereCondition} AND updated >= '${lastUpdatedStrJST}'${excludeIssueKeys} ORDER BY ${project.orderBy}`;
+        const requestBody: SearchRequest = {
+            jql: jql,
+            startAt: startAt,
+            maxResults: maxResults,
+            fields: fields,
+            expand: ['changelog']
+        };
 
-        const result = await firstValueFrom(IssueSearch.Get(connectionSetting.credentialInfo, jql, startAt, maxResults, fields));
+        const result = await firstValueFrom(IssueSearch.Post(connectionSetting.credentialInfo, requestBody));
 
         if (result === null) {
             break;
@@ -217,8 +224,18 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         }
     }
 
-    const rows = await connect.all('SELECT * FROM issues;');    
-    console.log(rows);
+    
+
+    connect.all('SELECT id, key, summary, updated FROM issues;', function(err, res){
+        if(err){
+            console.log(err);
+        }
+
+        for(const row of res){
+            console.log(row.id, row.key, row.summary, row.updated);
+        }
+    })
+
     try {
         await connect.close();
         await db.close();

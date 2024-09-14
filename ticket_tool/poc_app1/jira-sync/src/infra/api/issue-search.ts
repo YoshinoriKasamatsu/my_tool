@@ -1,5 +1,5 @@
 import type { CredentialInfo } from '../connect-setting';
-import { Get } from './http-common';
+import { Get, Post } from './http-common';
 
 const JIRA_API_ENDPOINT = '/rest/api/3/search';
 
@@ -44,6 +44,14 @@ export type SearchReults = {
     total: number,
 }
 
+export type SearchRequest = {
+    jql: string,
+    startAt: number,
+    maxResults: number,
+    fields: string[],
+    expand: string[]
+}
+
 export type Fields = {
     summary: string,
     status: {
@@ -70,6 +78,11 @@ export const IssueSearch = {
     ) => {
         const url = `${credential.endPoint}${JIRA_API_ENDPOINT}/?jql=${jql}&startAt=${startAt}&maxResults=${maxResults}&fields=${fields.join(',')}&expand=${expand.join(',')}`;
         const response = Get<SearchReults>(credential, url);
+        return response;
+    },
+    Post: (credential: CredentialInfo, requestBody: SearchRequest) => {
+        const url = `${credential.endPoint}${JIRA_API_ENDPOINT}`;
+        const response = Post<SearchReults, SearchRequest>(credential, url, requestBody);
         return response;
     }
 }
