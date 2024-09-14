@@ -140,7 +140,6 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 
             const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
             const issueFields = fieldObjects as Fields;
-            // console.log(`${issue.key} ${issueFields.summary} ${issueFields.updated}`);
             const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
             fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
 
@@ -206,7 +205,6 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
 
             });
             lastUpdated = projectSyncData.lastUpdated;
-            console.log(`${lastUpdated} ${issue.key} ${projectSyncData.lastupdatedIssueKeys.join(',')}`);
         }
         ProjectSyncData.saveProjectSyncData(projectSyncData);
         total += result.issues.length;
