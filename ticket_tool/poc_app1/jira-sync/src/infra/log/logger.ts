@@ -30,24 +30,24 @@ export class Logger {
         return this.instance;
     }
     info(message: string) {
-        console.log(`[INFO] ${message}`);
+        const logText = `[INFO] ${message}`
         // ログファイルに出力
-        this.write(message);
+        this.write(logText);
     }
     error(message: string) {
-        console.log(`[ERROR] ${message}`);
+        const logText = `[ERROR] ${message}`
         // ログファイルに出力
-        this.write(message);
+        this.write(logText);
     }
     warn(message: string) {
-        console.log(`[WARN] ${message}`);
+        const logText = `[WARN] ${message}`
         // ログファイルに出力
-        this.write(message);
+        this.write(logText);
     }
     debug(message: string) {
-        console.log(`[DEBUG] ${message}`);
+        const logText = `[DEBUG] ${message}`
         // ログファイルに出力
-        this.write(message);
+        this.write(logText);
     }
 
     // ログファイルへの書き込み関数。日時(yyyy-MM-dd_HH:MM:ss.fff形式)付きで出力する
