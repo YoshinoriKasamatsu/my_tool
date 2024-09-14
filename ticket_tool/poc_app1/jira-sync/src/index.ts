@@ -16,11 +16,13 @@ function createDefaultConfig() {
 async function syncTicket(connectionSetting: ConnectSetting) {
     const logger = Logger.getInstance();
     await SchemaData.SyncData(connectionSetting);
-    logger.info('Schema data has been updated.');   
+    logger.info('Schema data has been updated.');
+
+    // 1秒待機
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     await ProjectsData.Initialize(connectionSetting);
     logger.info('Project data has been updated.');
-
 
     await ProjectsData.SyncData(connectionSetting); 
     logger.info('Ticket data has been updated.');

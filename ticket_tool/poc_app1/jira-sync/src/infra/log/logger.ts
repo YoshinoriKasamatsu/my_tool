@@ -11,8 +11,11 @@ export class Logger {
     }
     static getInstance() {
         if (!this.instance) {
-            // ログファイルはyyyy-mm-dd.logとする
-            const logFilePath = Path.join(LOG_DIR, `${new Date().toISOString().split('T')[0]}.log`);
+            // ログファイルはyyyy-mm-dd:HHNNSS.logとする
+            const now = new Date();
+            const logFilePath = Path.join(LOG_DIR, `${now.toISOString().slice(0, 19).replace(/:/g, '')}.log`);
+
+            
             // ログのディレクトリが存在しない場合は作成する
             if (!fs.existsSync(LOG_DIR)) {
                 fs.mkdirSync(LOG_DIR, { recursive: true });
