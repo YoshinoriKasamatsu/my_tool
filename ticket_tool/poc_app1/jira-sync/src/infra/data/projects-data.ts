@@ -3,9 +3,9 @@ import { ProjectSyncData, type ConnectSetting, type ProjectInfo } from "../conne
 import * as fs from 'fs';
 import * as Path from 'path';
 import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
-import { IssueSearch, type Fields, type SearchRequest } from "../api/issue-search";
+import { IssueSearch, type Fields, type Issue, type SearchRequest } from "../api/issue-search";
 import * as duckdb from "duckdb";
-import { SchemaData } from "./issue-field-data";
+import { SchemaData, type FieldData } from "./issue-field-data";
 import { Logger } from "../log/logger";
 
 
@@ -125,80 +125,33 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         };
 
         const result = await firstValueFrom(IssueSearch.Post(connectionSetting.credentialInfo, requestBody));
-
         if (result === null) {
             break;
         }
 
         for (const issue of result.issues) {
-            // yyyy-MM-ddTHH:MM形式の文字列に変更(先頭16文字取得)
-            const lastUpdatedStr = lastUpdated.toISOString().slice(0, 16).replace('T', ' ');
 
+            // ファイルへ書き出し
+            {
+                const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
+                fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
+            }
+            
             const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
-            const issueFields = fieldObjects as Fields;
-            const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
-            fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
-
-            // 更新日時(yyyy-MM-ddを取得
-            let issueLastUpdatedStr = new Date(issueFields.updated);
-            // 更新日時を文字列からDate型に変換
-            let issueLastUpdated = new Date(issueLastUpdatedStr);
-            if (lastUpdatedStr !== issueLastUpdated.toISOString().slice(0, 16).replace('T', ' ')) {
+            
+            // 更新日時　"updated": "2024-08-27T00:41:24.208+0900"　から　2024-08-26T15:41:24.208Zに変換
+            let issueLastUpdated = new Date((fieldObjects as Fields).updated);
+            if (lastUpdated.toISOString().slice(0, 16).replace('T', ' ') !== issueLastUpdated.toISOString().slice(0, 16).replace('T', ' ')) {
                 projectSyncData.lastupdatedIssueKeys = [];
             }
             projectSyncData.lastupdatedIssueKeys.push(issue.key);
             projectSyncData.lastUpdated = issueLastUpdated;
 
-
-            let fieldNames = ['id', 'key', 'expand', 'self'];
-            let fieldValues = [issue.id, `'${issue.key}'`, `'${issue.expand}'`, `'${issue.self}'`];
-
-
-            for (const field of fieldsValue) {
-                let fieldName: string = '';
-                let fieldValue: string = '';
-                switch (field.schema?.type) {
-                    case 'number':
-                    case 'string':
-                        fieldName = `${field.id}`;
-                        fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
-                        break;
-                    case 'date':
-                    case 'datetime':
-                        fieldName = `${field.id}`;
-                        fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
-                        break;
-                    case 'project':
-                    case 'issuetype':
-                    case 'priority':
-                    case 'status':
-                        // fieldName = `${field.id}_id`;
-                        // fieldValue = fieldObjects[field.id];
-                        break;
-                    case 'user':
-                        // fieldName = `${field.id}_accountId`;
-                        // fieldValue = fieldObjects[field.id];
-                        break;
-                    case 'array':
-                    case 'any':
-                        // fieldNames.push(`${field.name}`);
-                        // fieldValues.push(`'${fieldObjects[field.id]}'`);
-                        break;
-                }
-                if (fieldName !== '') {
-                    fieldNames.push(fieldName);
-                    fieldValues.push(fieldValue);
-                }
-
-            }
-
-            // DuckDbにデータを登録
-            const insertSQL = `INSERT OR REPLACE INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
+            const insertSQL = createInsertSQL(issue, fieldsValue, fieldObjects);
             connect.exec(insertSQL, function (err, res) {
                 if (err) {
                     console.log(err);
                 }
-
             });
             lastUpdated = projectSyncData.lastUpdated;
         }
@@ -232,9 +185,55 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         console.error(e);
         logger.error('error');
     }
-
-
 }
+function createInsertSQL(issue: Issue, fieldsValue: FieldData[], fieldObjects: any) {
+    let fieldNames = ['id', 'key', 'expand', 'self'];
+    let fieldValues = [issue.id, `'${issue.key}'`, `'${issue.expand}'`, `'${issue.self}'`];
+
+
+    for (const field of fieldsValue) {
+        let fieldName: string = '';
+        let fieldValue: string = '';
+        switch (field.schema?.type) {
+            case 'number':
+            case 'string':
+                fieldName = `${field.id}`;
+                fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+                break;
+            case 'date':
+            case 'datetime':
+                fieldName = `${field.id}`;
+                fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+                break;
+            case 'project':
+            case 'issuetype':
+            case 'priority':
+            case 'status':
+                // fieldName = `${field.id}_id`;
+                // fieldValue = fieldObjects[field.id];
+                break;
+            case 'user':
+                // fieldName = `${field.id}_accountId`;
+                // fieldValue = fieldObjects[field.id];
+                break;
+            case 'array':
+            case 'any':
+                // fieldNames.push(`${field.name}`);
+                // fieldValues.push(`'${fieldObjects[field.id]}'`);
+                break;
+        }
+        if (fieldName !== '') {
+            fieldNames.push(fieldName);
+            fieldValues.push(fieldValue);
+        }
+
+    }
+
+    // DuckDbにデータを登録
+    const insertSQL = `INSERT OR REPLACE INTO issues(${fieldNames.join(',')}) VALUES (${fieldValues.join(',')});`;
+    return insertSQL;
+}
+
 function createJql(lastUpdated: Date, projectSyncData: ProjectSyncData, project: ProjectInfo) {
     let lastUpdatedJST = new Date(lastUpdated.toISOString());
     // JSTの日時の文字列を取得するために9時間足す

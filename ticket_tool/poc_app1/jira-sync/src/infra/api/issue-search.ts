@@ -3,42 +3,44 @@ import { Get, Post } from './http-common';
 
 const JIRA_API_ENDPOINT = '/rest/api/3/search';
 
+export type Issue = {
+    key: string,
+    id: string,
+    expand: string,
+    self: string,
+    changelog: {
+        histories: {
+            id: string,
+            created: string,
+            items: {
+                field: string,
+                fieldtype: string,
+                from: string,
+                fromString: string,
+                to: string,
+                toString: string
+            }[]
+    }[]},
+    fields: {
+    },
+    // fields: {
+    //     summary: string,
+    //     status: {
+    //         name: string,
+    //         statusCategory: {
+    //             key: string,
+    //             name: string
+    //         }
+    //     },
+    //     updated: string,
+    //     assignee: {
+    //         name: string
+    //     }
+    // }
+}
+
 export type SearchReults = {
-    issues: [{
-        key: string,
-        id: string,
-        expand: string,
-        self: string,
-        changelog: {
-            histories: {
-                id: string,
-                created: string,
-                items: {
-                    field: string,
-                    fieldtype: string,
-                    from: string,
-                    fromString: string,
-                    to: string,
-                    toString: string
-                }[]
-        }[]},
-        fields: {
-        },
-        // fields: {
-        //     summary: string,
-        //     status: {
-        //         name: string,
-        //         statusCategory: {
-        //             key: string,
-        //             name: string
-        //         }
-        //     },
-        //     updated: string,
-        //     assignee: {
-        //         name: string
-        //     }
-        // }
-    }];
+    issues: Issue[];
     maxResults: number,
     startAt: number,
     total: number,
