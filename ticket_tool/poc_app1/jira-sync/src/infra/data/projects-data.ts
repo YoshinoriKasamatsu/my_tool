@@ -45,7 +45,7 @@ export const ProjectsData = {
                         fieldsDefinitons.push(`${field.id}_id INTEGER NULL`);
                         break;
                     case 'user':
-                        fieldsDefinitons.push(`${field.id}_accountId INTEGER NULL`);
+                        fieldsDefinitons.push(`${field.id}_accountId string NULL`);
                         break;
                     case 'array':
                     case 'any':
@@ -90,7 +90,6 @@ export const ProjectsData = {
             if (!fs.existsSync(project_dir)) {
                 fs.mkdirSync(project_dir, { recursive: true });
             }
-            // プロジェクトのDuckDbファイルが存在しない場合は作成する
             await syncProject(project_dir, project, connectionSetting, fields, logger);
         }
     }
@@ -105,22 +104,13 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
     // プロジェクトの同期情報を取得
     let projectSyncData = ProjectSyncData.loadProject(project);
 
-    // 更新日時を取得
-    let lastUpdated: Date = projectSyncData.lastUpdated;;
-
-    const startAt = 0;
-    const maxResults = 100;
+    // 最終更新日時を取得
     let total = 0;
 
-    while (true) {
-        const jql = createJql(lastUpdated, projectSyncData, project);
-        const requestBody: SearchRequest = {
-            jql: jql,
-            startAt: startAt,
-            maxResults: maxResults,
-            fields: fields,
-            expand: ['changelog']
-        };
+    let isStop = false;
+    while (!isStop) {
+        const jql = createJql(projectSyncData.lastUpdated, projectSyncData, project);
+        const requestBody: SearchRequest = createRequestBody(jql, fields);
 
         const result = await firstValueFrom(IssueSearch.Post(connectionSetting.credentialInfo, requestBody));
         if (result === null) {
@@ -130,26 +120,24 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         for (const issue of result.issues) {
 
             // ファイルへ書き出し
-            const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
-            fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
+            writeIssuJson(project_dir, issue);
             
             const fieldObjects = JSON.parse(JSON.stringify(issue.fields));
+            // データベースへ登録
+            if(!(await updateDb(issue, fieldsValue, fieldObjects, connect))){
+                logger.error(`Project: ${project.projectKey} ${project.projectName} Data Sync Error. IssueKey: ${issue.key}`);
+                isStop = true;
+                break;
+            }
             
+            /// 最終更新日時の更新
             // 更新日時　"updated": "2024-08-27T00:41:24.208+0900"　から　2024-08-26T15:41:24.208Zに変換
             let issueLastUpdated = new Date((fieldObjects as Fields).updated);
-            if (lastUpdated.toISOString().slice(0, 16).replace('T', ' ') !== issueLastUpdated.toISOString().slice(0, 16).replace('T', ' ')) {
+            if (projectSyncData.lastUpdated.toISOString().slice(0, 16).replace('T', ' ') !== issueLastUpdated.toISOString().slice(0, 16).replace('T', ' ')) {
                 projectSyncData.lastupdatedIssueKeys = [];
             }
             projectSyncData.lastupdatedIssueKeys.push(issue.key);
             projectSyncData.lastUpdated = issueLastUpdated;
-
-            const insertSQL = createInsertSQL(issue, fieldsValue, fieldObjects);
-            connect.exec(insertSQL, function (err, res) {
-                if (err) {
-                    console.log(err);
-                }
-            });
-            lastUpdated = projectSyncData.lastUpdated;
         }
         ProjectSyncData.saveProjectSyncData(projectSyncData);
         total += result.issues.length;
@@ -170,6 +158,40 @@ async function syncProject(project_dir: string, project: ProjectInfo, connection
         logger.error('error');
     }
 }
+async function updateDb(issue: Issue, fieldsValue: FieldData[], fieldObjects: any, connect: duckdb.Connection): Promise<boolean> {
+    const insertSQL = createInsertSQL(issue, fieldsValue, fieldObjects);
+    return new Promise((resolve, reject) => {
+        connect.exec(insertSQL, function (err, res) {
+            if (err) {
+                const logger = Logger.getInstance();
+                logger.info(insertSQL);
+                logger.error(err.message);
+                resolve(false);
+            }else{
+                resolve(true);
+            }
+            
+        });
+    });
+}
+
+function writeIssuJson(project_dir: string, issue: Issue) {
+    const issueFilePath = Path.join(project_dir, `${issue.key}.json`);
+    fs.writeFileSync(issueFilePath, JSON.stringify(issue), 'utf8');
+}
+
+function createRequestBody(jql: string, fields: string[]): SearchRequest {
+    const startAt = 0;
+    const maxResults = 100;
+    return {
+        jql: jql,
+        startAt: startAt,
+        maxResults: maxResults,
+        fields: fields,
+        expand: ['changelog']
+    };
+}
+
 function showAllData(connect: duckdb.Connection) {
     connect.all('SELECT id, key, summary, updated FROM issues;', function (err, res) {
         if (err) {
@@ -216,12 +238,15 @@ function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
         case 'issuetype':
         case 'priority':
         case 'status':
-            // fieldName = `${field.id}_id`;
-            // fieldValue = fieldObjects[field.id];
+            fieldName = `${field.id}_id`;
+            
+            fieldValue = fieldObjects[field.id].id;
             break;
         case 'user':
-            // fieldName = `${field.id}_accountId`;
-            // fieldValue = fieldObjects[field.id];
+            if(fieldObjects[field.id] !== null){
+                fieldName = `${field.id}_accountId`;
+                fieldValue = `'${fieldObjects[field.id].accountId}'`;
+            }
             break;
         case 'array':
         case 'any':
