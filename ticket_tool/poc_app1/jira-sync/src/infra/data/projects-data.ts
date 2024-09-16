@@ -239,7 +239,6 @@ function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
         case 'priority':
         case 'status':
             fieldName = `${field.id}_id`;
-            
             fieldValue = fieldObjects[field.id].id;
             break;
         case 'user':
@@ -250,8 +249,10 @@ function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
             break;
         case 'array':
         case 'any':
-            // fieldNames.push(`${field.name}`);
-            // fieldValues.push(`'${fieldObjects[field.id]}'`);
+            if(fieldObjects[field.id] !== null && fieldObjects[field.id] !== undefined){
+                fieldName = `${field.id}`;
+                fieldValue = `'${JSON.stringify(fieldObjects[field.id])}'`;
+            }
             break;
     }
     return { fieldName, fieldValue };
