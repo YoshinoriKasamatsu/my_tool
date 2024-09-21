@@ -56,9 +56,9 @@ export const ProjectsData = {
             const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
             const db = new duckdb.Database(duckDbFilePath);
             const connect = db.connect();
-            // statuscategoryのインポート
-            // await createStatusCategory(connect);
-            // await createIssueTypes(connect);
+            
+            await createStatusCategory(connect);
+            await createIssueTypes(connect);
             await createProjects(connect);
             await createPriorities(connect);
             await createUsers(connect);
