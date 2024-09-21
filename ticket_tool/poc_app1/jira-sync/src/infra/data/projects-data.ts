@@ -57,34 +57,14 @@ export const ProjectsData = {
             const db = new duckdb.Database(duckDbFilePath);
             const connect = db.connect();
             // statuscategoryのインポート
-            {
-                const createTableSQL = `CREATE TABLE IF NOT EXISTS statuscategory (self VARCHAR, id LONG PRIMARY KEY, key VARCHAR, colorName VARCHAR, name VARCHAR);`;
-                await executeSQL(connect, createTableSQL);
-                const copyTable = `COPY statuscategory FROM '${Path.join(DATA_DIR, 'statuscategory.json')}'  (FORMAT 'json', auto_detect TRUE);`;
-                await executeSQL(connect, copyTable);
-            }
-
-            {
-                const createTableSQL = `CREATE TABLE IF NOT EXISTS issuetypes 
-                                        (
-                                            self VARCHAR, 
-                                            id LONG PRIMARY KEY, 
-                                            description VARCHAR, 
-                                            iconUrl VARCHAR, 
-                                            name VARCHAR,
-                                            untranslatedName VARCHAR,
-                                            subtask boolean,
-                                            avatarId LONG,
-                                            hierarchyLevel LONG,
-                                            scope JSON NULL
-                                            );`;
-                await executeSQL(connect, createTableSQL);
-                const copyTable = `INSERT INTO issuetypes SELECT * FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
-                await executeSQL(connect, copyTable);
-            }
-
-
+            // await createStatusCategory(connect);
+            // await createIssueTypes(connect);
+            await createProjects(connect);
+            await createPriorities(connect);
+            await createUsers(connect);
             
+            
+
             try{
                 const fieldsDefinitonsStr = fieldsDefinitons.join(', ');
                 const crewateIssuesSql = `CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON, ${fieldsDefinitonsStr});`;
@@ -122,6 +102,87 @@ export const ProjectsData = {
             await syncProject(project_dir, project, connectionSetting, fields, logger);
         }
     }
+}
+
+async function createUsers(connect: duckdb.Connection) {
+    const createTableSQL = `CREATE TABLE IF NOT EXISTS users 
+                                        (
+                                            self VARCHAR, 
+                                            accountId VARCHAR PRIMARY KEY, 
+                                            accountType VARCHAR,
+                                            emailAddress VARCHAR,
+                                            avatarUrls VARCHAR,
+                                            displayName VARCHAR,
+                                            active BOOLEAN,
+                                            timeZone VARCHAR,
+                                            locale VARCHAR
+                                            );`;
+    await executeSQL(connect, createTableSQL);
+    const copyTable = `INSERT OR REPLACE INTO users SELECT * FROM read_json('${Path.join(DATA_DIR, 'users.json')}');`;
+    await executeSQL(connect, copyTable);
+}
+
+async function createPriorities(connect: duckdb.Connection) {
+    const createTableSQL = `CREATE TABLE IF NOT EXISTS priorities 
+                                        (
+                                            self VARCHAR, 
+                                            statusColor VARCHAR,
+                                            description VARCHAR, 
+                                            iconUrl VARCHAR,
+                                            name VARCHAR,
+                                            id LONG PRIMARY KEY, 
+                                            );`;
+    await executeSQL(connect, createTableSQL);
+    const copyTable = `INSERT OR REPLACE INTO priorities SELECT * FROM read_json('${Path.join(DATA_DIR, 'priorities.json')}');`;
+    await executeSQL(connect, copyTable);
+}
+
+async function createProjects(connect: duckdb.Connection) {
+    const createTableSQL = `CREATE TABLE IF NOT EXISTS projects 
+                                        (
+                                            expand VARCHAR, 
+                                            self VARCHAR, 
+                                            id LONG PRIMARY KEY, 
+                                            key VARCHAR,
+                                            name VARCHAR,
+                                            avatarUrls JSON,
+                                            projectTypeKey VARCHAR,
+                                            simplified BOOLEAN,
+                                            style VARCHAR,
+                                            isPrivate boolean,
+                                            properties JSON,
+                                            entityId VARCHAR,
+                                            uuid VARCHAR
+                                            );`;
+    await executeSQL(connect, createTableSQL);
+    const copyTable = `INSERT OR REPLACE INTO projects SELECT * FROM read_json('${Path.join(DATA_DIR, 'projects.json')}');`;
+    await executeSQL(connect, copyTable);
+}
+
+async function createIssueTypes(connect: duckdb.Connection) {
+    const createTableSQL = `CREATE TABLE IF NOT EXISTS issuetypes 
+                                        (
+                                            self VARCHAR, 
+                                            id LONG PRIMARY KEY, 
+                                            description VARCHAR, 
+                                            iconUrl VARCHAR, 
+                                            name VARCHAR,
+                                            untranslatedName VARCHAR,
+                                            subtask boolean,
+                                            avatarId LONG,
+                                            hierarchyLevel LONG,
+                                            scope JSON NULL
+                                            );`;
+    await executeSQL(connect, createTableSQL);
+    const copyTable = `INSERT INTO issuetypes SELECT * FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
+    await executeSQL(connect, copyTable);
+}
+
+async function createStatusCategory(connect: duckdb.Connection) {
+    const createTableSQL = `CREATE TABLE IF NOT EXISTS statuscategory (self VARCHAR, id LONG PRIMARY KEY, key VARCHAR, colorName VARCHAR, name VARCHAR);`;
+    await executeSQL(connect, createTableSQL);
+    const copyTable = `COPY statuscategory FROM '${Path.join(DATA_DIR, 'statuscategory.json')}'  (FORMAT 'json', auto_detect TRUE);`;
+    await executeSQL(connect, copyTable);
 }
 
 async function executeSQL(connect: duckdb.Connection, crewateStatusCategorySql: string) {
