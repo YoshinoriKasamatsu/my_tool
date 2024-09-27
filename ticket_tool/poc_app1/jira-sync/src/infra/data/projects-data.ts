@@ -128,7 +128,6 @@ async function createUsers(connect: duckdb.Connection) {
                                             avatarUrls VARCHAR,
                                             displayName VARCHAR,
                                             active BOOLEAN,
-                                            timeZone VARCHAR,
                                             locale VARCHAR
                                             );`;
     await executeSQL(connect, createTableSQL);
@@ -164,8 +163,6 @@ async function createProjects(connect: duckdb.Connection) {
                                             simplified BOOLEAN,
                                             style VARCHAR,
                                             isPrivate boolean,
-                                            properties JSON,
-                                            entityId VARCHAR,
                                             uuid VARCHAR
                                             );`;
     await executeSQL(connect, createTableSQL);
@@ -185,7 +182,6 @@ async function createIssueTypes(connect: duckdb.Connection) {
                                             subtask boolean,
                                             avatarId LONG,
                                             hierarchyLevel LONG,
-                                            scope JSON NULL
                                             );`;
     await executeSQL(connect, createTableSQL);
     const copyTable = `INSERT OR REPLACE INTO issuetypes SELECT * FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
