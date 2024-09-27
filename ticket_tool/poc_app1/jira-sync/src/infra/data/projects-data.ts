@@ -8,6 +8,8 @@ import * as duckdb from "duckdb";
 import { SchemaData, type FieldData } from "./issue-field-data";
 import { Logger } from "../log/logger";
 
+const logger = Logger.getInstance();
+
 
 export const ProjectsData = {
 
@@ -26,32 +28,40 @@ export const ProjectsData = {
             }
 
             let fieldsDefinitons: string[] = [];
+            let ViewFields: string[] = [];
+            ViewFields.push('id', 'key', 'expand', 'self');
             const fieldsValue = await SchemaData.ReadData();
             
             fieldsValue.forEach(field => {
                 switch (field.schema?.type) {
                     case 'number':
                         fieldsDefinitons.push(`${field.id} INTEGER NULL`);
+                        ViewFields.push(`${field.id} as '${field.name}'`);
                         break;                        
                     case 'string':
                     case 'date':
                     case 'datetime':
                         fieldsDefinitons.push(`${field.id} ${field.schema.type} NULL`);
+                        ViewFields.push(`${field.id} as '${field.name}'`);
                         break;
                     case 'project':
                     case 'issuetype':
                     case 'priority':
                     case 'status':
                         fieldsDefinitons.push(`${field.id}_id INTEGER NULL`);
+                        ViewFields.push(`${field.id}_id as '${field.name}_id'`);
                         break;
                     case 'user':
                         fieldsDefinitons.push(`${field.id}_accountId string NULL`);
+                        ViewFields.push(`${field.id}_accountId as '${field.name}_accountId'`);
                         break;
                     case 'array':
                     case 'any':
                         fieldsDefinitons.push(`${field.id} JSON`);
+                        ViewFields.push(`${field.id} as '${field.name}'`);
                         break;
                 }
+                
             });
             const duckDbFilePath = Path.join(project_dir, 'data.duckdb');
             const db = new duckdb.Database(duckDbFilePath);
@@ -63,14 +73,18 @@ export const ProjectsData = {
             await createPriorities(connect);
             await createUsers(connect);
             
-            
-
             try{
                 const fieldsDefinitonsStr = fieldsDefinitons.join(', ');
                 const crewateIssuesSql = `CREATE TABLE IF NOT EXISTS issues (id INTEGER PRIMARY KEY, key VARCHAR, expand VARCHAR, self VARCHAR, fields JSON, ${fieldsDefinitonsStr});`;
                 await connect.exec(crewateIssuesSql, function(err, res){
                     if(err){
-                        console.log(err);
+                        logger.error(err.message + ' ' + crewateIssuesSql);
+                    }
+                });
+                const createViewSql = `CREATE VIEW IF NOT EXISTS issues_view AS SELECT ${ViewFields.join(', ')} FROM issues;`;
+                await connect.exec(createViewSql, function(err, res){
+                    if(err){
+                        logger.error(err.message + ' ' + createViewSql);
                     }
                 });
 
@@ -174,21 +188,22 @@ async function createIssueTypes(connect: duckdb.Connection) {
                                             scope JSON NULL
                                             );`;
     await executeSQL(connect, createTableSQL);
-    const copyTable = `INSERT INTO issuetypes SELECT * FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
+    const copyTable = `INSERT OR REPLACE INTO issuetypes SELECT * FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
     await executeSQL(connect, copyTable);
 }
 
 async function createStatusCategory(connect: duckdb.Connection) {
     const createTableSQL = `CREATE TABLE IF NOT EXISTS statuscategory (self VARCHAR, id LONG PRIMARY KEY, key VARCHAR, colorName VARCHAR, name VARCHAR);`;
     await executeSQL(connect, createTableSQL);
-    const copyTable = `COPY statuscategory FROM '${Path.join(DATA_DIR, 'statuscategory.json')}'  (FORMAT 'json', auto_detect TRUE);`;
+    // const copyTable = `COPY statuscategory FROM '${Path.join(DATA_DIR, 'statuscategory.json')}'  (FORMAT 'json', auto_detect TRUE);`;
+    const copyTable = `INSERT OR REPLACE INTO statuscategory SELECT * FROM read_json('${Path.join(DATA_DIR, 'statuscategory.json')}');`;
     await executeSQL(connect, copyTable);
 }
 
 async function executeSQL(connect: duckdb.Connection, crewateStatusCategorySql: string) {
     await connect.exec(crewateStatusCategorySql, function (err, res) {
         if (err) {
-            console.log(err);
+            logger.error(err.message + ' ' + crewateStatusCategorySql);
         }
     });
 }
