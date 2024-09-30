@@ -121,17 +121,26 @@ export const ProjectsData = {
 async function createUsers(connect: duckdb.Connection) {
     const createTableSQL = `CREATE TABLE IF NOT EXISTS users 
                                         (
-                                            self VARCHAR, 
+                                            self VARCHAR NULL, 
                                             accountId VARCHAR PRIMARY KEY, 
-                                            accountType VARCHAR,
-                                            emailAddress VARCHAR,
-                                            avatarUrls VARCHAR,
-                                            displayName VARCHAR,
-                                            active BOOLEAN,
-                                            locale VARCHAR
+                                            accountType VARCHAR NULL,
+                                            emailAddress VARCHAR NULL,
+                                            avatarUrls VARCHAR NULL,
+                                            displayName VARCHAR NULL,
+                                            active BOOLEAN NULL,
+                                            locale VARCHAR NULL
                                             );`;
     await executeSQL(connect, createTableSQL);
-    const copyTable = `INSERT OR REPLACE INTO users SELECT * FROM read_json('${Path.join(DATA_DIR, 'users.json')}');`;
+    const copyTable = `INSERT OR REPLACE INTO users SELECT 
+                                            self , 
+                                            accountId , 
+                                            accountType ,
+                                            emailAddress ,
+                                            avatarUrls ,
+                                            displayName ,
+                                            active ,
+                                            locale 
+                                            FROM read_json('${Path.join(DATA_DIR, 'users.json')}');`;
     await executeSQL(connect, copyTable);
 }
 
@@ -166,7 +175,19 @@ async function createProjects(connect: duckdb.Connection) {
                                             uuid VARCHAR
                                             );`;
     await executeSQL(connect, createTableSQL);
-    const copyTable = `INSERT OR REPLACE INTO projects SELECT * FROM read_json('${Path.join(DATA_DIR, 'projects.json')}');`;
+    const copyTable = `INSERT OR REPLACE INTO projects SELECT 
+                                            expand , 
+                                            self , 
+                                            id , 
+                                            key ,
+                                            name ,
+                                            avatarUrls ,
+                                            projectTypeKey ,
+                                            simplified ,
+                                            style ,
+                                            isPrivate ,
+                                            uuid 
+                                            FROM read_json('${Path.join(DATA_DIR, 'projects.json')}');`;
     await executeSQL(connect, copyTable);
 }
 
@@ -184,7 +205,17 @@ async function createIssueTypes(connect: duckdb.Connection) {
                                             hierarchyLevel LONG,
                                             );`;
     await executeSQL(connect, createTableSQL);
-    const copyTable = `INSERT OR REPLACE INTO issuetypes SELECT * FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
+    const copyTable = `INSERT OR REPLACE INTO issuetypes SELECT
+                                            self , 
+                                            id , 
+                                            description , 
+                                            iconUrl , 
+                                            name ,
+                                            untranslatedName ,
+                                            subtask ,
+                                            avatarId ,
+                                            hierarchyLevel 
+                                            FROM read_json('${Path.join(DATA_DIR, 'issuetypes.json')}');`;
     await executeSQL(connect, copyTable);
 }
 
