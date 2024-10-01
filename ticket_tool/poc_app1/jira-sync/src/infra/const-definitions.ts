@@ -20,3 +20,7 @@ export const PRIORITY_FILE_PATH = Path.join(DATA_DIR, 'priorities.json');
 export const PROJECT_FILE_PATH = Path.join(DATA_DIR, 'projects.json');
 export const STATUS_FILE_PATH = Path.join(DATA_DIR, 'statuscategory.json');
 export const USER_FILE_PATH = Path.join(DATA_DIR, 'users.json');
+export const USER_FILE_PATH2 = Path.join(DATA_DIR, 'users2.json');
+export const USER_FILE_PATH3 = Path.join(DATA_DIR, 'users3.json');
+export const USER_FILE_PATH4 = Path.join(DATA_DIR, 'users4.json');
+export const USER_FILE_PATH5 = Path.join(DATA_DIR, 'users5.json');

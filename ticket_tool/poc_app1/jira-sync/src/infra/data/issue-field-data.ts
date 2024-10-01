@@ -2,7 +2,7 @@ import { firstValueFrom } from "rxjs";
 import type { ConnectSetting, CredentialInfo } from "../connect-setting";
 import { Field, IssueType, Priority, Project, Status, User } from "../api/issue-schema";
 import * as fs from 'fs';
-import { DATA_DIR, FIELDS_FILE_PATH, ISSUE_TYPE_FILE_PATH, OUTPUT_DIR, PRIORITY_FILE_PATH, PROJECT_FILE_PATH, STATUS_FILE_PATH, USER_FILE_PATH } from "../const-definitions";
+import { DATA_DIR, FIELDS_FILE_PATH, ISSUE_TYPE_FILE_PATH, OUTPUT_DIR, PRIORITY_FILE_PATH, PROJECT_FILE_PATH, STATUS_FILE_PATH, USER_FILE_PATH, USER_FILE_PATH2, USER_FILE_PATH3, USER_FILE_PATH4, USER_FILE_PATH5 } from "../const-definitions";
 
 
 export type FieldData = {
@@ -29,8 +29,14 @@ export const SchemaData = {
         const getShcemaData = async (func: Function, filePath: string) => {
             // issuetype
             const schemaData = await firstValueFrom(func(connectionSetting.credentialInfo));
+            if (schemaData === null) {
+                return;
+            }
             // フィールドデータをjson形式で保存する
             const schemaJson = JSON.stringify(schemaData, null, 2);
+            if(schemaJson === '[]'){
+                return;
+            }
             if (!fs.existsSync(filePath)) {
                 fs.writeFileSync(filePath, schemaJson, 'utf8');
             }else{
@@ -54,6 +60,10 @@ export const SchemaData = {
         await getShcemaData(Status.Get, STATUS_FILE_PATH);
         // user
         await getShcemaData(User.Get, USER_FILE_PATH);
+        await getShcemaData(User.Get2, USER_FILE_PATH2);
+        await getShcemaData(User.Get3, USER_FILE_PATH3);
+        await getShcemaData(User.Get4, USER_FILE_PATH4);
+        await getShcemaData(User.Get5, USER_FILE_PATH5);
     },
 
     ReadData: async (): Promise<FieldData[]> => {

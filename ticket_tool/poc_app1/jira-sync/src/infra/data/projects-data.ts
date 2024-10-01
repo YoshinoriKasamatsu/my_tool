@@ -2,7 +2,7 @@ import { firstValueFrom } from "rxjs";
 import { ProjectSyncData, type ConnectSetting, type ProjectInfo } from "../connect-setting";
 import * as fs from 'fs';
 import * as Path from 'path';
-import { DATA_DIR, FIELDS_FILE_PATH } from "../const-definitions";
+import { DATA_DIR, FIELDS_FILE_PATH, USER_FILE_PATH, USER_FILE_PATH2, USER_FILE_PATH3, USER_FILE_PATH4, USER_FILE_PATH5 } from "../const-definitions";
 import { IssueSearch, type Fields, type Issue, type SearchRequest } from "../api/issue-search";
 import * as duckdb from "duckdb";
 import { SchemaData, type FieldData } from "./issue-field-data";
@@ -131,17 +131,33 @@ async function createUsers(connect: duckdb.Connection) {
                                             locale VARCHAR NULL
                                             );`;
     await executeSQL(connect, createTableSQL);
-    const copyTable = `INSERT OR REPLACE INTO users SELECT 
-                                            self , 
-                                            accountId , 
-                                            accountType ,
-                                            emailAddress ,
-                                            avatarUrls ,
-                                            displayName ,
-                                            active ,
-                                            locale 
-                                            FROM read_json('${Path.join(DATA_DIR, 'users.json')}');`;
-    await executeSQL(connect, copyTable);
+
+    const insert = async (filePath: string) => {
+        const copyTable = `INSERT OR REPLACE INTO users SELECT 
+        self , 
+        accountId , 
+        accountType ,
+        emailAddress ,
+        avatarUrls ,
+        displayName ,
+        active ,
+        locale 
+        FROM read_json('${filePath}');`;
+        await executeSQL(connect, copyTable);
+    }
+    await insert(USER_FILE_PATH);
+    if(fs.existsSync(USER_FILE_PATH2)){
+        await insert(USER_FILE_PATH2);
+    }
+    if(fs.existsSync(USER_FILE_PATH3)){
+        await insert(USER_FILE_PATH3);
+    }
+    if(fs.existsSync(USER_FILE_PATH4)){
+        await insert(USER_FILE_PATH4);
+    }
+    if(fs.existsSync(USER_FILE_PATH5)){
+        await insert(USER_FILE_PATH5);
+    }
 }
 
 async function createPriorities(connect: duckdb.Connection) {
@@ -362,15 +378,15 @@ function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
     let fieldName: string = '';
     let fieldValue: string = '';
     switch (field.schema?.type) {
-        case 'number':
         case 'string':
             fieldName = `${field.id}`;
-            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id].replace("'", "''")}'`;
             break;
+        case 'number':
         case 'date':
         case 'datetime':
             fieldName = `${field.id}`;
-            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id].replace("'", "''")}'`;
+            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
             break;
         case 'project':
         case 'issuetype':

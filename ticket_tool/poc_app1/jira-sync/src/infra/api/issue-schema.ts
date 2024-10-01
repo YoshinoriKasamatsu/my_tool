@@ -6,7 +6,11 @@ const JIRA_API_ENDPOINT_ISSUE_TYPE = '/rest/api/3/issuetype';
 const JIRA_API_ENDPOINT_PRIORITY = '/rest/api/3/priority';
 const JIRA_API_ENDPOINT_PROJECT = '/rest/api/3/project';
 const JIRA_API_ENDPOINT_STATUS = '/rest/api/3/statuscategory';
-const JIRA_API_ENDPOINT_USER = '/rest/api/3/users/search';
+const JIRA_API_ENDPOINT_USER = '/rest/api/3/users/search?startAt=0&maxResults=1000';
+const JIRA_API_ENDPOINT_USER2 = '/rest/api/3/users/search?startAt=1000&maxResults=1000';
+const JIRA_API_ENDPOINT_USER3 = '/rest/api/3/users/search?startAt=2000&maxResults=1000';
+const JIRA_API_ENDPOINT_USER4 = '/rest/api/3/users/search?startAt=3000&maxResults=1000';
+const JIRA_API_ENDPOINT_USER5 = '/rest/api/3/users/search?startAt=4000&maxResults=1000';
 
 
 export type Field = {
@@ -80,6 +84,26 @@ export const Project = {
 export const User = {
     Get: (credential: CredentialInfo) => {
         const url = `${credential.endPoint}${JIRA_API_ENDPOINT_USER}`;
+        const response = Get<object[]>(credential, url);
+        return response;
+    },
+    Get2: (credential: CredentialInfo) => {
+        const url = `${credential.endPoint}${JIRA_API_ENDPOINT_USER2}`;
+        const response = Get<object[]>(credential, url);
+        return response;
+    },
+    Get3: (credential: CredentialInfo) => {
+        const url = `${credential.endPoint}${JIRA_API_ENDPOINT_USER3}`;
+        const response = Get<object[]>(credential, url);
+        return response;
+    },
+    Get4: (credential: CredentialInfo) => {
+        const url = `${credential.endPoint}${JIRA_API_ENDPOINT_USER4}`;
+        const response = Get<object[]>(credential, url);
+        return response;
+    },
+    Get5: (credential: CredentialInfo) => {
+        const url = `${credential.endPoint}${JIRA_API_ENDPOINT_USER5}`;
         const response = Get<object[]>(credential, url);
         return response;
     }
