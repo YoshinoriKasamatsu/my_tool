@@ -171,8 +171,7 @@ async function createProjects(connect: duckdb.Connection) {
                                             projectTypeKey VARCHAR,
                                             simplified BOOLEAN,
                                             style VARCHAR,
-                                            isPrivate boolean,
-                                            uuid VARCHAR
+                                            isPrivate boolean
                                             );`;
     await executeSQL(connect, createTableSQL);
     const copyTable = `INSERT OR REPLACE INTO projects SELECT 
@@ -185,8 +184,7 @@ async function createProjects(connect: duckdb.Connection) {
                                             projectTypeKey ,
                                             simplified ,
                                             style ,
-                                            isPrivate ,
-                                            uuid 
+                                            isPrivate 
                                             FROM read_json('${Path.join(DATA_DIR, 'projects.json')}');`;
     await executeSQL(connect, copyTable);
 }
@@ -372,7 +370,7 @@ function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
         case 'date':
         case 'datetime':
             fieldName = `${field.id}`;
-            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id]}'`;
+            fieldValue = fieldObjects[field.id] === null || fieldObjects[field.id] === undefined ? 'null' : `'${fieldObjects[field.id].replace("'", "''")}'`;
             break;
         case 'project':
         case 'issuetype':
@@ -391,7 +389,7 @@ function createFieldNameAndValue(field: FieldData, fieldObjects: any) {
         case 'any':
             if(fieldObjects[field.id] !== null && fieldObjects[field.id] !== undefined){
                 fieldName = `${field.id}`;
-                fieldValue = `'${JSON.stringify(fieldObjects[field.id])}'`;
+                fieldValue = `'${JSON.stringify(fieldObjects[field.id]).replace("'", "''")}'`;
             }
             break;
     }
